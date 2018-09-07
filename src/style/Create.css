@@ -1,0 +1,98 @@
+/*--------------------Create Page Css----------------*/
+.sh{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+.tokenadd{
+    padding-bottom: 50px;
+}
+.tokenadd .c5x{
+   border-bottom: 1px solid rgba(0,0,0,.12); 
+}
+.tokenadd input{
+    width: 100%;
+    padding: 5px 0;
+    border: none;
+    border-bottom: 1.2px solid #a5a5a5;
+    outline: none;
+    position: relative;
+}
+.tokenadd input:focus{
+    border-bottom: 2px solid #009688;
+}
+.eror{
+    font-size: 12px;
+}
+.bn5x button{
+    background-color: transparent;
+    border: 1px solid #009688;
+}
+.bancorN6 .ico-x1{
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    overflow: hidden;
+    border: 2px solid #222;
+}
+._tokennfo{
+    margin-top: 5px;
+}
+._tokennfo a{
+    color: #009688;
+    font-size: 12px;
+    max-width: 200px;
+}
+._tokennfo a i{
+    padding-right: 5px;
+}
+.byRBt{
+    margin-top: 4px;
+    background-color: #009688;
+}
+.infXo4{
+    border-bottom: 1px solid #EEE;
+}
+.infXo4 ul li{
+    display: inline-block;
+    padding-right:20px;
+}
+.infXo4 ul li span{
+    font-size: 11px;
+    color: #5f5f5f;
+}
+
+.fullContainerSet{
+    padding-left: 50px;
+}
+.ext5Ner time{
+    font-size: 11px;
+}
+.ext5Ner input{
+    width: 100%;
+    margin-top: 10px;
+    border: none;
+    font-size: 16px;
+    outline: none;
+    border-bottom: 1px solid #9c9c9c;
+}
+.ext5Ner input:focus{
+    border-bottom: 2px solid #009688;
+}
+.extra-info{
+    padding: 0;
+    margin-top: 30px;
+    padding-left: 16px;
+}
+.extra-info table{
+    background: #F6F6F6;
+    padding: 10px 0;
+    font-size: 12px;
+}
+.extra-info table tr td{
+    padding: 10px;
+}
+.ad-settings{
+    background-color: #e9ecef;
+}
+.ad-settings > h5{
+    
+}
