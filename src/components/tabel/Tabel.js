@@ -24,7 +24,7 @@ export default class componentName extends Component {
         this.setState({ isLoading: true })
         axios.get(`https://jsonplaceholder.typicode.com/users`).then(res => {
             const resp = res.data;
-            console.log(resp, "---hay")
+            console.log(resp, "---hello")
             this.setState({ data: resp, isLoading: false })
         }, (error) => {
             console.log(error.response);
