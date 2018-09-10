@@ -19,18 +19,47 @@ export default class Relays extends Component {
         this.tableDataFromRelay();  
     }
 
-    tableDataFromRelay = () =>{
+    // tableDataFromRelay = () =>{
+    //     this.setState({ isLoading: true })
+    //     axios.get(`https://jsonplaceholder.typicode.com/users`).then(res => {
+    //         const resp = res.data;
+    //         console.log(resp,"--hey resp");
+    //         this.setState({data: resp})
+    //         this.setState({ isLoading: false })
+    //     }, (error) => {
+    //         console.log(error)
+    //         this.setState({ isLoading: false })
+    //     })
+    // }
+
+
+    tableDataFromRelay = () => {
         this.setState({ isLoading: true })
-        axios.get(`https://jsonplaceholder.typicode.com/users`).then(res => {
-            const resp = res.data;
-            console.log(resp,"--hey resp");
-            this.setState({data: resp})
-            this.setState({ isLoading: false })
-        }, (error) => {
-            console.log(error)
-            this.setState({ isLoading: false })
+    axios({
+        method: 'GET',
+        url:'http://apipegdex.zero2pi.com/getreltoken',
+
+        // headers: {
+        //   'Accept': 'application/json',
+        //   'Access-Control-Allow-Origin': 'http://localhost:8080',
+        //   'Authorization': 'Bearer ' + addAccountDetailsToken,
+        // },
+  
+      }).then((response) => {
+        console.log("tableData---------------->",response)
+        this.setState({
+            data: response.data, isLoading: false
+        })
+      })
+  
+        .catch((error) => {
+          console.log('errorrrrr---------->',error.response)
+          this.setState({ isLoading: false })
         })
     }
+
+
+
     
 
     render() {
@@ -57,16 +86,16 @@ export default class Relays extends Component {
                                         <p className="mg0 f13 c2">{value.name}</p>
                                     </td>
                                     <td>
-                                        <p className="mg0">{value.phone}</p>
-                                        <p className="mg0 f13 c2">$0.0300</p>
+                                        <p className="mg0">{value.price}</p>
+                                        {/* <p className="mg0 f13 c2">$0.0300</p> */}
                                     </td>
                                     <td>
-                                        <p className="mg0">$1,309,849,066.88</p>
-                                        <p className="mg0 f13 c2">$0.0300</p>
+                                        <p className="mg0">{value.liquidity}</p>
+                                        {/* <p className="mg0 f13 c2">$0.0300</p> */}
                                     </td>
                                     <td>
-                                        <p>0.00
-                                            <span className="sub4">{value.username}</span>
+                                        <p>{value.balance}
+                                            {/* <span className="sub4">{value.username}</span> */}
                                         </p>
                                     </td>
                                     <td className="tr">

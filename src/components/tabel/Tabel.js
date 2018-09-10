@@ -4,8 +4,9 @@ import '../../style/Tabel.css';
 import Loader from '../loader/Loader';
 import axios from 'axios';
 import { myTest } from '../../service/Http_service';
-
 import Button from '../button/Button';
+
+
 export default class componentName extends Component {
 
     constructor(props) {
@@ -20,17 +21,44 @@ export default class componentName extends Component {
         this.getTableData()
     }
 
+
+
     getTableData = () => {
         this.setState({ isLoading: true })
-        axios.get(`https://jsonplaceholder.typicode.com/users`).then(res => {
-            const resp = res.data;
-            console.log(resp, "---hello")
-            this.setState({ data: resp, isLoading: false })
-        }, (error) => {
-            console.log(error.response);
-            this.setState({ isLoading: false })
+    axios({
+        method: 'GET',
+        url:'http://apipegdex.zero2pi.com/getsmarttoken',
+
+        // headers: {
+        //   'Accept': 'application/json',
+        //   'Access-Control-Allow-Origin': 'http://localhost:8080',
+        //   'Authorization': 'Bearer ' + addAccountDetailsToken,
+        // },
+  
+      }).then((response) => {
+        console.log("tableData---------------->",response)
+        this.setState({
+            data: response.data, isLoading: false
+        })
+      })
+  
+        .catch((error) => {
+          console.log('errorrrrr---------->',error.response)
+          this.setState({ isLoading: false })
         })
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     buySell = (data) => {
@@ -78,10 +106,10 @@ export default class componentName extends Component {
                                                 <i className="fa fa-check-circle f13 chk2B"></i>
                                             </a>
                                         </td>
-                                        <td>{value.id}</td>
-                                        <td>$0.0001</td>
-                                        <td>{value.phone}</td>
-                                        <td>$15,000.00</td>
+                                        <td>{value.price}</td>
+                                        <td>{value.marketCap}</td>
+                                        <td>{value.liquidity}</td>
+                                        <td>{value.balance}</td>
                                         <td>
                                             <p>{value.website}
                                                 <span className="sub4">KIN</span>
