@@ -70,7 +70,7 @@ export let createRelay = async function (issuer, total_supply, max_supply, conne
     let result = await contract.createrelay(issuer, total_supply, max_supply, connector1, accaddress1, connector2, accaddress2, { authorization:  ['eosiotoken12@active']})
 }
 
-export let createSmart = async function (total_supply, connector1, accaddress1, weight, cb) {
+export let createSmart = async function (total_supply, connector1, accaddress1, weight,tokenSym, cb) {
 
     console.log("hello")
     let scatter = window.scatter;
@@ -80,7 +80,9 @@ export let createSmart = async function (total_supply, connector1, accaddress1, 
     let account=scatter.identity.accounts[0].name;
     let contract = await eos.contract("eosiotoken12")
     console.log(contract)
-    let result = await contract.createsmart(account, total_supply, "10000.0000 ATDST", connector1, accaddress1, weight, { authorization:  [account]})
+    var max_supp = "100000.0000" + " " + tokenSym;
+    console.log(max_supp);
+    let result = await contract.createsmart(account, total_supply, max_supp, connector1, accaddress1, weight, { authorization:  account})
     alert("You have successfully created smart token..")
 }
 

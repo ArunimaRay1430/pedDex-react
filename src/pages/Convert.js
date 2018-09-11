@@ -29,6 +29,7 @@ export default class Convert extends Component {
         console.log("search");
        
         if (this.state.connsym) {
+            //console.log(this.state.tokensym)
             buyToken(this.state.token1, this.state.tokensym, "");
 
         } else {

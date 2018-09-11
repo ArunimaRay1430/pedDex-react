@@ -9,7 +9,7 @@ export default class Create4 extends Component {
         super(props);
         console.log("checking----",this.props.location.state);
         this.state={
-             from:"smartcreate1",
+             from:'',
              to:"intermediate",
             tokenAddress : this.props.location.state.tokenAddress,
             tokenSymbol:this.props.location.state.tokenSymbol,
@@ -31,7 +31,9 @@ export default class Create4 extends Component {
             scatter = window.scatter;
             console.log("scatter inside",scatter.identity.accounts["0"]);
             let {name,authority}=scatter.identity.accounts["0"];
+            console.log("--",name);
             this.setState({from:name,permission:authority});
+            console.log("state-----",this.state)
         })
        }
 
@@ -39,6 +41,7 @@ export default class Create4 extends Component {
            alert("called check add event")
        }
         handleTransfer=()=> {
+            console.log("---",this.state.from);
         let eosOptions = {
         chainId: "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca"
       };
@@ -90,7 +93,9 @@ export default class Create4 extends Component {
     var  smart = this.props.location.state.pegDiposit +" "+"ATDI";
     var address = this.props.location.state.tokenAddress;
     var wt = this.props.location.state.weight;
-  createSmart(asset,smart,address,wt)    
+    var tokenSym = this.props.location.state.tokenSymbol;
+   // console.log("--",tokenSym);
+  createSmart(asset,smart,address,wt,tokenSym)    
   console.log(smart,asset,address,wt);
 
  }
