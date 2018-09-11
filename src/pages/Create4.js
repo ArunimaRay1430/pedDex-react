@@ -1,16 +1,29 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { scatterLogin, transfer, createRelay, createSmart, buyToken, sellToken, convertToken } from "../utils/methods";
 import '../style/Create.css';
 import Eos from "eosjs";
 var scatter={};
 export default class Create4 extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        
+        super(props);
+        console.log("checking----",this.props.location.state);
         this.state={
-             from:"",
+             from:"smartcreate1",
              to:"intermediate",
-             amount:50
-        }
+            tokenAddress : this.props.location.state.tokenAddress,
+            tokenSymbol:this.props.location.state.tokenSymbol,
+            numberOfToken:this.props.location.state.numberOfToken,
+            pegDiposit:this.props.location.state.pegDiposit,
+            weight :this.props.location.state.weight,
+        };
+        console.log("this is the value",this.props.location.state.tokenAddress);
+        console.log("this is the value",this.props.location.state.tokenSymbol);
+        console.log("this is the value",this.props.location.state.numberOfToken);
+        console.log("this is the value",this.props.location.state.pegDiposit);
+        console.log("this is the value",this.props.location.state.weight);
     }
+
     componentWillMount() {
         console.log("window",window);
            document.addEventListener('scatterLoaded', scatterExtension => {
@@ -21,11 +34,12 @@ export default class Create4 extends Component {
             this.setState({from:name,permission:authority});
         })
        }
+
        check= ()=>{
            alert("called check add event")
        }
-    handleTransfer=()=> {
-    let eosOptions = {
+        handleTransfer=()=> {
+        let eosOptions = {
         chainId: "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca"
       };
     
@@ -37,24 +51,26 @@ export default class Create4 extends Component {
         chainId: "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca"
       };
     console.log("transfer initiated");
-    let eos= scatter.eos(network, Eos, eosOptions);
-
+    let scatter = window.scatter;
+    let eos= scatter.eos(network, Eos, eosOptions)
+    //console.log("this is the value",this.props.location.state.pegdDisposit)
     eos.transaction(
       {
         actions: [
           {
-            account: 'eosio.token',
+            account: this.props.location.state.tokenAddress,
             name: 'transfer',
             authorization: [{
               actor: this.state.from,
-              permission: this.state.permission
+              //permission: this.state.permission
+              permission: 'active'
             }],
             data: {
               from: this.state.from,
               to: this.state.to,
-              quantity: `${this.state.amount.toFixed(4)} EOS`,
+              quantity: `${this.state.pegDiposit} ATDI`,
               memo: "hello"
-              //memo: parseInt(this.compareData[0].gameresult)+ parseInt(this.logIn.controls['amount'].value)
+              //memo: parseInt(this.compareData[0].gameresult)+ parseInt(this.logIn.controls['pegDiposit'].value)
             }
           }
         ]
@@ -68,6 +84,16 @@ export default class Create4 extends Component {
       // options -- example: {broadcast: false}
     )
 }
+ createToken(){
+      
+    var  asset = this.props.location.state.numberOfToken+" "+this.props.location.state.tokenSymbol;
+    var  smart = this.props.location.state.pegDiposit +" "+"ATDI";
+    var address = this.props.location.state.tokenAddress;
+    var wt = this.props.location.state.weight;
+  createSmart(asset,smart,address,wt)    
+  console.log(smart,asset,address,wt);
+
+ }
 
     render() {
         return (
@@ -78,19 +104,24 @@ export default class Create4 extends Component {
                             <div className="ui-lg-12 sh w b2 br2 tokenadd nopad">
                                 <p className="c5x mg0 pad f3 f16 c3">List a New Token on PEGDEX</p>
                                 <div className="pad">
-                                    <h5 className="f2 mg0 c3 mgtb">Deposit PEG:USD Amount</h5>
-                                    <h1>10,000$</h1>
-                                    <button className="c7 br2" onClick={this.handleTransfer}>Transfer</button>
+                                    <h5 className="f2 mg0 c3 mgtb">Deposit PEG:USD pegDiposit</h5>
+                                    <h1>${this.props.location.state.pegDiposit}</h1>
+                                    <button className="c7 br2" onClick={()=>{
+                                        // console.log("print".this.props.location.state);
+                                        this.handleTransfer()
+                                        }}>
+                                        Transfer</button>
                                     {/* <input type="text" placeholder="VeChain Token(VEN)" className="f16 f3 c3" /> */}
                                 </div>
                                 <div className="full pad tr bn5x">
-                                    <button className="c7 br2" onClick>NEXT</button>
+                                    <button className="c7 br2" onClick = {() => this.createToken()}>CREATE</button>
+    
                                 </div>
                             </div>
                         </div>
                         <div className="ui-lg-6 npr">
                             <div className="ui-lg-12 sh w br2 nopad">
-                                <p className="f15 pad c3">Listing a token on PegDex is easy. You can use this form to generate a new relay between your token and the PEG:USD stabletoken. Once you have created a relay it will automatically be listed on PegDex. You will receive the entire initial supply of relay tokens, and they can be sold at any time to pull out your deposit amounts. By owning relay token(s) you will also earn fees whenever people buy or sell through the relay on PegDex. All new listings must be funded with a minimum of 20,000 PEG:USD Tokens.</p>
+                                <p className="f15 pad c3">Listing a token on PegDex is easy. You can use this form to generate a new relay between your token and the PEG:USD stabletoken. Once you have created a relay it will automatically be listed on PegDex. You will receive the entire initial supply of relay tokens, and they can be sold at any time to pull out your deposit pegDiposits. By owning relay token(s) you will also earn fees whenever people buy or sell through the relay on PegDex. All new listings must be funded with a minimum of 20,000 PEG:USD Tokens.</p>
                             </div>
                         </div>
                     </div>

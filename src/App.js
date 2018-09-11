@@ -33,7 +33,7 @@ class App extends Component {
           <Route path="/Create/2" component={Create2} />
           <Route path="/Create/3" component={Create3} />
           <Route path="/Create/4" component={Create4} />
-          <Route path="/Convert/:id" component={Convert}/>
+          <Route path="/Convert/" component={Convert}/>
          </div> 
       </Router>
     );

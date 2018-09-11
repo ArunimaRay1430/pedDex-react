@@ -30,7 +30,8 @@ export function scatterLogin(cb) {
 
 
     scatter.getIdentity(requiredFields).then(identity => {
-        console.log("identity", identity);
+        console.log("identity", identity.accounts[0].name);
+        console.log("identity array", identity);
         cb(null, identity)
     }).catch(error => {
         console.log("error", error)
@@ -69,28 +70,32 @@ export let createRelay = async function (issuer, total_supply, max_supply, conne
     let result = await contract.createrelay(issuer, total_supply, max_supply, connector1, accaddress1, connector2, accaddress2, { authorization:  ['eosiotoken12@active']})
 }
 
-export let createSmart = async function (issuer, total_supply, max_supply, connector1, accaddress1, weight, cb) {
+export let createSmart = async function (total_supply, connector1, accaddress1, weight, cb) {
 
     console.log("hello")
     let scatter = window.scatter;
     var pubkey = "EOS8ZjT6ahwoz39srfqR53rNYTb5KXm1CysmZYyvHHkUa2xAgmqVL";
     console.log("create smart called");
     const eos = scatter.eos(network, Eos, eosOptions);
+    let account=scatter.identity.accounts[0].name;
     let contract = await eos.contract("eosiotoken12")
     console.log(contract)
-    let result = await contract.createsmart(issuer, total_supply, max_supply, connector1, accaddress1, weight, { authorization:  ['eosiotoken12@active']})
+    let result = await contract.createsmart(account, total_supply, "10000.0000 ATDST", connector1, accaddress1, weight, { authorization:  [account]})
+    alert("You have successfully created smart token..")
 }
 
-export let buyToken = async function (input,stoken,issuer, cb) {
+export let buyToken = async function (input,stoken, cb) {
 
     console.log("hello")
     let scatter = window.scatter;
     var pubkey = "EOS8ZjT6ahwoz39srfqR53rNYTb5KXm1CysmZYyvHHkUa2xAgmqVL";
     console.log("buytoken called");
     const eos = scatter.eos(network, Eos, eosOptions);
+    let account=scatter.identity.accounts[0].name;
     let contract = await eos.contract("eosiotoken12")
     console.log(contract)
-    let result = await contract.buytoken(input, stoken, issuer, { authorization: "smartcreate1@active"})
+    let result = await contract.buytoken(input, stoken, account, { authorization: account})
+    alert("Buy-Token is successfully completed..")
 }
 
 export let sellToken = async function (input,issuer, cb) {
@@ -102,7 +107,7 @@ export let sellToken = async function (input,issuer, cb) {
     const eos = scatter.eos(network, Eos, eosOptions);
     let contract = await eos.contract("eosiotoken12")
     console.log(contract)
-    let result = await contract.selltoken(input, issuer, { authorization: "smartcreate1@active"})
+    let result = await contract.selltoken(input, issuer, { authorization: issuer})
 }
 
 export let convertToken = async function (input,symbol,symbol2,user, cb) {

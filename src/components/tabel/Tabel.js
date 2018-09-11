@@ -4,9 +4,8 @@ import '../../style/Tabel.css';
 import Loader from '../loader/Loader';
 import axios from 'axios';
 import { myTest } from '../../service/Http_service';
+
 import Button from '../button/Button';
-
-
 export default class componentName extends Component {
 
     constructor(props) {
@@ -15,58 +14,34 @@ export default class componentName extends Component {
             data: [],
             isLoading: false,
         }
+        console.log("symbol---",this.state.sym)
     }
 
     componentDidMount = () => {
         this.getTableData()
     }
 
-
-
     getTableData = () => {
         this.setState({ isLoading: true })
-    axios({
-        method: 'GET',
-        url:'http://apipegdex.zero2pi.com/getsmarttoken',
-
-        // headers: {
-        //   'Accept': 'application/json',
-        //   'Access-Control-Allow-Origin': 'http://localhost:8080',
-        //   'Authorization': 'Bearer ' + addAccountDetailsToken,
-        // },
-  
-      }).then((response) => {
-        console.log("tableData---------------->",response)
-        this.setState({
-            data: response.data, isLoading: false
-        })
-      })
-  
-        .catch((error) => {
-          console.log('errorrrrr---------->',error.response)
-          this.setState({ isLoading: false })
+        axios.get(`http://apipegdex.zero2pi.com/getsmarttoken`).then(res => {
+            const resp = res.data;
+            console.log(resp, "---hay")
+            this.setState({ data: resp, isLoading: false })
+        }, (error) => {
+            console.log(error.response);
+            this.setState({ isLoading: false })
         })
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     buySell = (data) => {
-        alert('this is:' + data.website);
+       
+        this.props.history.push('/Convert/' + data.website)
     }
 
     convertContinue = (path) => {
-        this.props.history.push('/Convert/' + path.phone)
+      this.props.history.push('/Convert/',{symbol:path.symbol, price:path.priceEachToken})
+        
     }
 
     render() {
@@ -81,7 +56,7 @@ export default class componentName extends Component {
                             <table className="full tl">
                                 <tbody>
                                     <tr className="hpHed56">
-                                        <td colSpan="3">Name</td>
+                                        <td colSpan="3">Token Name</td>
                                         <td>Price</td>
                                         <td>Market Cap</td>
                                         <td className="c">Liquidity Depth <i className="fa fa-caret-down"></i></td>
@@ -99,24 +74,19 @@ export default class componentName extends Component {
                                                     <i className="fa fa-external-link f13"></i>
                                                 </a>
                                             </p>
-                                            <p className="mg0 f13 c2">Bancor Network Token</p>
+                                            <p className="mg0 f13 c2">{value.symbol}</p>
                                         </td>
                                         <td>
                                             <a target="_" href={value.website}>
                                                 <i className="fa fa-check-circle f13 chk2B"></i>
                                             </a>
                                         </td>
-                                        <td>{value.price}</td>
-                                        <td>{value.marketCap}</td>
+                                        <td>{value.priceEachToken}</td>
+                                        <td>${value.marketCap}</td>
                                         <td>{value.liquidity}</td>
-                                        <td>{value.balance}</td>
+                                        <td>$15,000.00</td>
                                         <td>
-                                            <p>{value.website}
-                                                <span className="sub4">KIN</span>
-                                            </p>
-                                        </td>
-                                        <td>
-                                            <button className="bySel" onClick={(e) => this.buySell(value)}>Buy / Sell</button>
+                                            <button className="bySel" onClick={(e) => this.buySell(value.priceEachToken)}>Buy / Sell</button>
                                         </td>
                                     </tr>)}
                                 </tbody>

@@ -1,7 +1,18 @@
 import React, { Component } from 'react'
 import '../style/Create.css';
+import Create from './Create'
 export default class Create2 extends Component {
-
+    constructor(props){
+        super(props);
+        this.state={
+            tokenAddress : this.props.location.state.tokenAddress,
+            tokenSymbol:'',
+            numberOfToken:'',
+            pegDiposit:'',
+            weight :'',
+        };
+        console.log("address----",this.props.location.state.tokenAddress);
+    }
     render() {
         return (
             <div>
@@ -12,16 +23,18 @@ export default class Create2 extends Component {
                                 <p className="c5x mg0 pad f3 f16 c3">List a New Token on PEGDEX</p>
                                 <div className="pad">
                                     <h5 className="f2 mg0 c3 mgtb">Token</h5>
-                                    <input type="text" placeholder="VeChain Token(VEN)" className="f16 f3 c3" />
-                                    <h5 className="f2 mg0 c3 mgtb mgf1">VEN Deposit Amount</h5>
-                                    <input type="text" placeholder="Initial Token Funding Deposit" className="f16 f3 c3" />
+                                    <input type="text" placeholder="Token-Symbol" className="f16 f3 c3" onChange={(e)=>this.setState({tokenSymbol:e.target.value})} />
+                                    <h5 className="f2 mg0 c3 mgtb mgf1">Number Of Token</h5>
+                                    <input type="text" placeholder="number of token to be created"   className="f16 f3 c3" onChange={(e)=>this.setState({numberOfToken:e.target.value})} />
                                     <h5 className="f2 mg0 c3 mgtb mgf1">PEG:USD Deposit Amount</h5>
-                                    <input type="text" placeholder="Initial PEG:USD Funding Deposit" className="f16 f3 c3" />
-                                    <h5 className="f2 mg0 c3 mgtb mgf1">Initial Token Address</h5>
-                                    <input type="text" placeholder="$0.00" className="f16 f3 c3" />
+                                    <input type="text" placeholder="Initial PEG:USD Funding Deposit" className="f16 f3 c3" onChange={(e)=>this.setState({pegDiposit:e.target.value})} />
+                                    <h5 className="f2 mg0 c3 mgtb mgf1">Weight</h5>
+                                    <input type="text" placeholder="connectorWeight" className="f16 f3 c3" onChange={(e)=>this.setState({weight:e.target.value})}/>
                                 </div>
                                 <div className="full pad tr bn5x">
-                                    <button className="c7 br2" onClick={()=>this.props.history.push("/Create/3")}>NEXT</button>
+                                    {/* <button className="c7 br2" onClick={()=>this.props.history.push({pathname:'/Create/3',state:{tokenSymbol:this.state.tokenSymbol, numberOfToken:this.state.numberOfToken,pegDiposit:this.state.pegDiposit}})}>NEXT</button> */}
+
+                                    {<button className="c7 br2" onClick={()=>this.props.history.push({pathname:'/Create/4',state:{tokenSymbol:this.state.tokenSymbol, numberOfToken:this.state.numberOfToken,pegDiposit:this.state.pegDiposit,weight : this.state.weight , tokenAddress : this.props.location.state.tokenAddress}})}>NEXT</button>}
                                 </div>
                             </div>
                         </div>

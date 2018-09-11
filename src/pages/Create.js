@@ -3,6 +3,12 @@ import '../style/Create.css';
 import Create2 from './Create2';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 export default class Create extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            tokenAddress : '',
+        };
+    }
     render() {
         return (
             <div>
@@ -13,11 +19,12 @@ export default class Create extends Component {
                                 <p className="c5x mg0 pad f3 f16 c3">List a New Token on PEGDEX</p>
                                 <div className="pad">
                                     <h5 className="f2 mg0 c3 mgtb">Token Address</h5>
-                                    <input type="text" placeholder="ERC20 Token Contract Address" className="f16 f3 c3" />
+                                    <input type="text" placeholder="ERC20 Token Contract Address" className="f16 f3 c3" onChange={(e)=>this.setState({tokenAddress:e.target.value})} />
                                     <small className="eror er">This contract object doesn't have address set yet, please set an address first.</small>
                                 </div>
                                 <div className="full pad tr bn5x">
-                                    <button className="c7 br2" onClick={()=>this.props.history.push("/Create/2")}>NEXT</button>
+                                   {/*  {<button className="c7 br2" onClick={()=>this.props.history.push('/Create/2',state:{tokenAddress:this.props.location.state.tokenAddress}})}>NEXT</button>} */}
+                                   {<button className="c7 br2" onClick={()=>this.props.history.push({pathname:'/Create/2',state:{tokenAddress:this.state.tokenAddress}})}>NEXT</button>}
                                 </div>
                             </div>
                         </div>

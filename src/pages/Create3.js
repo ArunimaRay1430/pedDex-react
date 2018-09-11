@@ -1,17 +1,19 @@
 import React, { Component } from 'react'
 import '../style/Create.css';
 import Eos from "eosjs";
+import Create2 from './Create2'
 var scatter = {};
 export default class Create3 extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
              from:"",
              to:"intermediate",
-             amount:50 
-        }
+             amount:this.props.location.state.venDiposit
+        };
     }
-    componentWillMount() {
+    
+    /* componentWillMount() {
         console.log("window",window);
            document.addEventListener('scatterLoaded', scatterExtension => {
                console.log("window");
@@ -50,7 +52,7 @@ export default class Create3 extends Component {
             data: {
               from: this.state.from,
               to: this.state.to,
-              quantity: `${this.state.amount.toFixed(4)} EOS`,
+              quantity: `${this.props.location.state.venDiposit} EOS`,
               memo: "hello"
               //memo: parseInt(this.compareData[0].gameresult)+ parseInt(this.logIn.controls['amount'].value)
             }
@@ -66,7 +68,7 @@ export default class Create3 extends Component {
       // options -- example: {broadcast: false}
     )
 
-  }
+  } */
 
 
 
@@ -78,14 +80,14 @@ export default class Create3 extends Component {
                         <div className="ui-lg-6 npl">
                             <div className="ui-lg-12 sh w b2 br2 tokenadd nopad">
                                 <p className="c5x mg0 pad f3 f16 c3">List a New Token on PEGDEX</p>
-                                <div className="pad">
+                                {/* <div className="pad">
                                     <h5 className="f2 mg0 c3 mgtb">Deposit VEN Amount</h5>
-                                    <h1>10,000$</h1>
+                                    <h1>${this.props.location.state.venDiposit}</h1>
                                     <button onClick={()=>{this.handleTransfer()}} className="c7 br2">Transfer</button>
-                                    {/* <input type="text" placeholder="VeChain Token(VEN)" className="f16 f3 c3" /> */}
-                                </div>
+                                    {/* <input type="text" placeholder="VeChain Token(VEN)" className="f16 f3 c3" /> }
+                                </div> */}
                                 <div className="full pad tr bn5x">
-                                    <button className="c7 br2" onClick={()=>this.props.history.push("/Create/4")}>NEXT</button>
+                                    <button className="c7 br2" onClick={()=>this.props.history.push({pathname:'/Create/4',state:{pegdexDisposit:this.props.location.state.pegDiposit}})}>NEXT</button>
                                 </div>
                             </div>
                         </div>
