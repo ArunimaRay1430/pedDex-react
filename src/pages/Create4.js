@@ -96,7 +96,8 @@ export default class Create4 extends Component {
     var  smart = this.props.location.state.pegDiposit +" "+"ATDI";
     var address = this.props.location.state.tokenAddress;
     var wt = this.props.location.state.weight;
-  createSmart(asset,smart,address,wt)    
+    var tokenSym = this.props.location.state.tokenSymbol
+  createSmart(asset,smart,address,wt,tokenSym)    
   console.log(smart,asset,address,wt);
 
  }

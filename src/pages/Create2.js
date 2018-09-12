@@ -52,7 +52,7 @@ export default class Create2 extends Component {
                                 <div className="full pad tr bn5x">
                                     {/* <button className="c7 br2" onClick={()=>this.props.history.push({pathname:'/Create/3',state:{tokenSymbol:this.state.tokenSymbol, numberOfToken:this.state.numberOfToken,pegDiposit:this.state.pegDiposit}})}>NEXT</button> */}
 
-                                    {<button className="c7 br2" onClick={()=>{this.handleValidation(),this.props.history.push({pathname:'/Create/4',state:{tokenSymbol:this.state.tokenSymbol, numberOfToken:this.state.numberOfToken,pegDiposit:this.state.pegDiposit,weight : this.state.weight , tokenAddress : this.props.location.state.tokenAddress}})}}>NEXT</button>}
+                                    {<button className="c7 br2" onClick={()=>{this.props.history.push({pathname:'/Create/4',state:{tokenSymbol:this.state.tokenSymbol, numberOfToken:this.state.numberOfToken,pegDiposit:this.state.pegDiposit,weight : this.state.weight , tokenAddress : this.props.location.state.tokenAddress}})}}>NEXT</button>}
                                 </div>
                             </div>
                         </div>
