@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import '../utils/methods.js'
 import '../style/Create.css'
-import { buyToken } from '../utils/methods.js';
+import { buyToken, convertToken } from '../utils/methods.js';
 import { sellToken } from '../utils/methods.js';
 import axios from 'axios';
-export default class Convert extends Component {
+export default class RelayConvert extends Component {
     constructor(props) {
         super(props);
         console.log("inside conver",this.props.location.state)
@@ -12,11 +12,16 @@ export default class Convert extends Component {
             params: '',
             token1: '',
             token2: '',
-            tokensym: this.props.location.state.symbol,
-            connsym: 'ATDI',
-            connsymfixed: 'ATDI',
-            echtokprice:this.props.location.state.price,
-            mrp:parseFloat(1/this.props.location.state.price).toFixed(5)
+            conn1fix:this.props.location.state.symbol1,
+            conn2fix:this.props.location.state.symbol2,
+            conn1sym: this.props.location.state.symbol1,
+            conn2sym: this.props.location.state.symbol2,
+            echconnprice:this.props.location.state.price,
+            echtokenprice:this.props.location.state.pricetoken,
+            mrktcap:this.props.location.state.mrktcap,
+            liqui:this.props.location.state.liqui,
+            sym:this.props.location.state.symbol,
+           // connmrp:parseFloat(1/ this.props.location.state.price).toFixed(5),
         })
 
     }
@@ -27,37 +32,35 @@ export default class Convert extends Component {
    
     search = () => {
         console.log("search");
-       
-        if (this.state.connsym=="ATDI") {
-            console.log(this.state.connsym)
-            var tokenConn = this.state.token1 + " " + this.state.connsym;
-            console.log("buy token--",tokenConn)
-            buyToken(tokenConn, this.state.tokensym, "");
-
-        } else {
-            var tokenSmt = this.state.token1 + " " + this.state.connsym;
-            console.log("sell token--",tokenSmt)
-            sellToken(tokenSmt, "");
-        }
-
+        var connSym = this.state.token1 + " " + this.state.conn1sym;
+        console.log("convert--",connSym);       
+        convertToken(connSym,this.state.sym,this.state.conn2sym,"")
     }
 
     convert = () => {
-        this.setState({ tokensym: this.state.connsym, connsym: this.state.tokensym })
+        this.setState({ conn1sym: this.state.conn2sym, conn2sym: this.state.conn1sym })
     }
     convertto() {
-        this.setState({ token2: (parseFloat(this.state.token1) * this.state.mrp).toFixed(5) })
+       
+            console.log("convertto1")
+            this.setState({ token2: (parseFloat(this.state.token1) * this.state.echconnprice).toFixed(5) })
+    
     }
     convertfrom() {
-        this.setState({ token2:( parseFloat(this.state.token1) / this.state.mrp).toFixed(5) })
+    
+            console.log("convertfrom")
+            this.setState({ token2:( parseFloat(this.state.token1) / this.state.echconnprice).toFixed(5) })
+       
     }
 
     onChange(e) {
-        if (this.state.connsym=="ATDI") {
+        if (this.state.conn1sym=="ATDI") {
             this.setState({ token1: e.target.value })
+            console.log("onchange to")
             this.convertto();
         } else {
             this.setState({ token1: e.target.value })
+            console.log("onchange from")
             this.convertfrom();
         }
 
@@ -83,21 +86,23 @@ export default class Convert extends Component {
                                     </p>
                                 </div>
                                 <div className="ui-lg-5 tr">
-                                    <button className="bgt cw byRBt f15 u br2 f1" onClick={(e) => { this.search(e) }}>Buy The SMART Token</button>
+                                    <button className="bgt cw byRBt f15 u br2 f1" onClick={(e) => { this.search(e) }}>Buy The Relay Token</button>
                                 </div>{/*--end of header part--*/}
                                 <div className="ui-lg-11 nopad infXo4 f13">
                                     <ul className="pad">
-                                        <li>Price: <span>${this.state.mrp}</span></li>
-                                        <li>Market Cap: <span>$135,355,181.60</span></li>
-                                        <li>Liquidity Depth: <span>$583,564.16</span></li>
+                                    
+                                        <li>Price for Eachtoken: <span>${this.state.echtokenprice}</span></li>
+                                        <li>Market Cap: <span>${this.state.mrktcap}</span></li>
+                                        <li>Liquidity Depth: <span>${this.state.liqui}</span></li>
                                         <li>Relay: <span>0x607108c46bCE4cF6f86698E9B46E3270A734FeFe</span></li>
                                     </ul>
+                                    
                                 </div>{/*-----End of rate,mar,more--*/}
                                 <div className="ui-lg-12 full nopad fullContainerSet">
                                     <h5 className="c3 f1">Convert BNT</h5>
                                     <div className="ui-lg-5 nopad ext5Ner">
                                         <label className="full d f13 c7">SPEND</label>
-                                        <input className="f1 c3" type="text" placeholder={this.state.connsym} value={this.state.token1} onChange={(e) => { this.onChange(e) }} />
+                                        <input className="f1 c3" type="text" placeholder={this.state.conn1sym} value={this.state.token1} onChange={(e) => { this.onChange(e) }} />
                                         <time className="c3 f1"><h4>(in format of 0.0000)</h4></time>
                                         <time className="c3 f1">Your Balance: 2000</time>
                                     </div>
@@ -107,7 +112,7 @@ export default class Convert extends Component {
                                     </div>
                                     <div className="ui-lg-5 nopad ext5Ner">
                                         <label className="full d f13 c7">RECEIVE</label>
-                                        <input className="f1 c3" type="text" placeholder={this.state.tokensym} value={this.state.token2} onChange={(e) => { this.onChange(e) }} />
+                                        <input className="f1 c3" type="text" placeholder={this.state.conn2sym} value={this.state.token2} onChange={(e) => { this.onChange(e) }} />
                                         <time className="full d tr c1 f1">Your Balance: 0.00000000</time>
                                     </div>
                                 </div>{/*-----End of RECEIVE box--*/}
@@ -117,7 +122,7 @@ export default class Convert extends Component {
                                             <tbody>
                                                 <tr>
                                                     <td>Rate:</td>
-                                                    <td className="tr">1 {this.state.connsymfixed} = ${parseFloat(this.state.echtokprice).toFixed(5)}</td>
+                                                    <td className="tr">1 {this.state.conn1fix}  = ${parseFloat( this.state.echconnprice).toFixed(5)} {this.state.conn2fix}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Slippage:</td>

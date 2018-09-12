@@ -35,12 +35,11 @@ export default class componentName extends Component {
 
 
     buySell = (data) => {
-       
-        this.props.history.push('/Convert/' + data.website)
+        //alert('this is it:');
     }
 
     convertContinue = (path) => {
-      this.props.history.push('/Convert/',{symbol:path.symbol, price:path.priceEachToken})
+      this.props.history.push('/Convert/',{symbol:path.symbol, price:path.priceEachToken,mrktcap:path.marketCap,liqui:path.liquidity})
         
     }
 
@@ -81,8 +80,8 @@ export default class componentName extends Component {
                                                 <i className="fa fa-check-circle f13 chk2B"></i>
                                             </a>
                                         </td>
-                                        <td>{value.priceEachToken}</td>
-                                        <td>${value.marketCap}</td>
+                                        <td>{(value.priceEachToken).toFixed(4)}</td>
+                                        <td>${value.marketCap.toFixed(4)}</td>
                                         <td>{value.liquidity}</td>
                                         <td>$15,000.00</td>
                                         <td>

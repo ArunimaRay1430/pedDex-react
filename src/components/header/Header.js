@@ -104,11 +104,11 @@ export default class Header extends Component {
 
         }) */
 
-        sellToken("50.0000 ATDSMT", "smartcreate1", () => {
+        /* sellToken("50.0000 ATDSMT", "smartcreate1", () => {
 
             console.log("done")
 
-        })
+        }) */
 
         /* convertToken("30.0000 CET", "ATDRLY", "ATDI", "smartcreate1", () => {
 

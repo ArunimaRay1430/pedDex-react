@@ -5,23 +5,29 @@ import Eos from "eosjs";
 var scatter={};
 export default class Create4 extends Component {
     constructor(props){
-        
         super(props);
         console.log("checking----",this.props.location.state);
         this.state={
-             from:'',
+             from:"innotical123",
              to:"intermediate",
             tokenAddress : this.props.location.state.tokenAddress,
             tokenSymbol:this.props.location.state.tokenSymbol,
             numberOfToken:this.props.location.state.numberOfToken,
             pegDiposit:this.props.location.state.pegDiposit,
             weight :this.props.location.state.weight,
+            ButtonState : false,
         };
+        this.changeButtonState = this.changeButtonState.bind(this);
         console.log("this is the value",this.props.location.state.tokenAddress);
         console.log("this is the value",this.props.location.state.tokenSymbol);
         console.log("this is the value",this.props.location.state.numberOfToken);
         console.log("this is the value",this.props.location.state.pegDiposit);
         console.log("this is the value",this.props.location.state.weight);
+    }
+    changeButtonState(){
+        this.setState({
+            ButtonState : true,
+        })
     }
 
     componentWillMount() {
@@ -31,9 +37,7 @@ export default class Create4 extends Component {
             scatter = window.scatter;
             console.log("scatter inside",scatter.identity.accounts["0"]);
             let {name,authority}=scatter.identity.accounts["0"];
-            console.log("--",name);
             this.setState({from:name,permission:authority});
-            console.log("state-----",this.state)
         })
        }
 
@@ -41,11 +45,10 @@ export default class Create4 extends Component {
            alert("called check add event")
        }
         handleTransfer=()=> {
-            console.log("---",this.state.from);
         let eosOptions = {
         chainId: "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca"
       };
-    
+      
     let network = {
         protocol: "http", // Defaults to https
         blockchain: "eos",
@@ -61,7 +64,7 @@ export default class Create4 extends Component {
       {
         actions: [
           {
-            account: this.props.location.state.tokenAddress,
+            account: 'eosatidiumio',
             name: 'transfer',
             authorization: [{
               actor: this.state.from,
@@ -93,9 +96,7 @@ export default class Create4 extends Component {
     var  smart = this.props.location.state.pegDiposit +" "+"ATDI";
     var address = this.props.location.state.tokenAddress;
     var wt = this.props.location.state.weight;
-    var tokenSym = this.props.location.state.tokenSymbol;
-   // console.log("--",tokenSym);
-  createSmart(asset,smart,address,wt,tokenSym)    
+  createSmart(asset,smart,address,wt)    
   console.log(smart,asset,address,wt);
 
  }
@@ -111,15 +112,11 @@ export default class Create4 extends Component {
                                 <div className="pad">
                                     <h5 className="f2 mg0 c3 mgtb">Deposit PEG:USD pegDiposit</h5>
                                     <h1>${this.props.location.state.pegDiposit}</h1>
-                                    <button className="c7 br2" onClick={()=>{
-                                        // console.log("print".this.props.location.state);
-                                        this.handleTransfer()
-                                        }}>
-                                        Transfer</button>
+                                    <button className="c7 br2" onClick={()=>{ this.handleTransfer(),this.changeButtonState()}}>Transfer</button>
                                     {/* <input type="text" placeholder="VeChain Token(VEN)" className="f16 f3 c3" /> */}
                                 </div>
                                 <div className="full pad tr bn5x">
-                                    <button className="c7 br2" onClick = {() => this.createToken()}>CREATE</button>
+                                    <button disabled={!this.state.ButtonState} className="c7 br2" onClick = {() => this.createToken()}>CREATE</button>
     
                                 </div>
                             </div>

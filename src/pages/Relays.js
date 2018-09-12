@@ -14,52 +14,30 @@ export default class Relays extends Component {
             isLoading:false,
         })
     }
-
+    buySell = (data) => {
+        alert('this is it:');
+    }
+    convertContinue = (path) => {
+        console.log(path.priceEachToken);
+        this.props.history.push('/RelayConvert/',{symbol1:path.connector1Symbol,symbol2:path.connector2Symbol, price:path.priceEachConn,symbol:path.symbol,mrktcap:path.marketCap,liqui:path.liquidity, pricetoken:path.priceEachToken})
+          
+      } 
     componentDidMount = () => {
         this.tableDataFromRelay();  
     }
 
-    // tableDataFromRelay = () =>{
-    //     this.setState({ isLoading: true })
-    //     axios.get(`https://jsonplaceholder.typicode.com/users`).then(res => {
-    //         const resp = res.data;
-    //         console.log(resp,"--hey resp");
-    //         this.setState({data: resp})
-    //         this.setState({ isLoading: false })
-    //     }, (error) => {
-    //         console.log(error)
-    //         this.setState({ isLoading: false })
-    //     })
-    // }
-
-
-    tableDataFromRelay = () => {
+    tableDataFromRelay = () =>{
         this.setState({ isLoading: true })
-    axios({
-        method: 'GET',
-        url:'http://apipegdex.zero2pi.com/getreltoken',
-
-        // headers: {
-        //   'Accept': 'application/json',
-        //   'Access-Control-Allow-Origin': 'http://localhost:8080',
-        //   'Authorization': 'Bearer ' + addAccountDetailsToken,
-        // },
-  
-      }).then((response) => {
-        console.log("tableData---------------->",response)
-        this.setState({
-            data: response.data, isLoading: false
-        })
-      })
-  
-        .catch((error) => {
-          console.log('errorrrrr---------->',error.response)
-          this.setState({ isLoading: false })
+        axios.get(`http://apipegdex.zero2pi.com/getreltoken`).then(res => {
+            const resp = res.data;
+            console.log(resp,"--hey resp");
+            this.setState({data: resp})
+            this.setState({ isLoading: false })
+        }, (error) => {
+            console.log(error)
+            this.setState({ isLoading: false })
         })
     }
-
-
-
     
 
     render() {
@@ -72,34 +50,37 @@ export default class Relays extends Component {
                         <table className="full">
                             <tbody>
                                 <tr className="hpHed56">
-                                    <td className="inh9">Token</td>
-                                    <td>Price</td>
-                                    <td>Liquidity Depths</td>
-                                    <td>My Balance</td>
-                                    <td className="tr">
-                                    <input type="checkbox" /> Hide tokens with 0 balance
-                                </td>
+                                    <td colSpan="3">Token Name</td>
+                                        <td>Price</td>
+                                        <td>Market Cap</td>
+                                        <td className="c">Liquidity Depth <i className="fa fa-caret-down"></i></td>
+                                        <td>My Balance</td>
+                                        <td colSpan="2">My Balance</td>
                                 </tr>
-                                {this.state.data.map((value,v )=><tr key={v} className="_tokenN">
-                                    <td className="inh9">
-                                        <p className="mg0 f15 bd c6 f2">{value.username}</p>
-                                        <p className="mg0 f13 c2">{value.name}</p>
-                                    </td>
-                                    <td>
-                                        <p className="mg0">{value.price}</p>
-                                        {/* <p className="mg0 f13 c2">$0.0300</p> */}
-                                    </td>
-                                    <td>
-                                        <p className="mg0">{value.liquidity}</p>
-                                        {/* <p className="mg0 f13 c2">$0.0300</p> */}
-                                    </td>
-                                    <td>
-                                        <p>{value.balance}
-                                            {/* <span className="sub4">{value.username}</span> */}
-                                        </p>
-                                    </td>
-                                    <td className="tr">
-                                        <button className="bySel">Buy / Sell</button>
+                                {this.state.data.map((value, k) => <tr key={k} className="_tokenN" onClick={(e) => this.convertContinue(value)}>
+                                        <td>
+                                            <img src={require('../images/img250/download.png')} />
+                                        </td>
+                                        <td>
+                                            <p className="mg0 f15 bd c6 f2">
+                                                {value.name}
+                                                <a href="">
+                                                    <i className="fa fa-external-link f13"></i>
+                                                </a>
+                                            </p>
+                                            <p className="mg0 f13 c2">{value.symbol}</p>
+                                        </td>
+                                        <td>
+                                            <a target="_" href={value.website}>
+                                                <i className="fa fa-check-circle f13 chk2B"></i>
+                                            </a>
+                                        </td>
+                                        <td>{value.priceEachToken.toFixed(4)}</td>
+                                        <td>${value.marketCap.toFixed(4)}</td>
+                                        <td>{value.liquidity}</td>
+                                        <td>$15,000.00</td>
+                                        <td>
+                                        <button className="bySel" onClick={(e) => this.buySell(value.priceEachRel)}>Buy / Sell</button>
                                     </td>
                                 </tr>)}
                             </tbody>
