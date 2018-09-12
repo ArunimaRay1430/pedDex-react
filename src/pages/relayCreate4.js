@@ -9,15 +9,23 @@ export default class Create4 extends Component {
                 this.state={
                     from:"",
                      to:"intermediate",
-                    token1Address     : this.props.location.state.token1Address,
-                    token2Address     : this.props.location.state.token2Address,
-                    tokenSymbol       :this.props.location.state.tokenSymbol,
-                    numberOfToken     :this.props.location.state.numberOfToken,
-                    connector1Deposit :this.props.location.state.connector1Deposit,
-                    pegDeposit        :this.props.location.state.pegDeposit,
+                     token1Address     : this.props.location.state.token1Address,
+                     token2Address     : this.props.location.state.token2Address,
+                     tokenSymbol       :this.props.location.state.tokenSymbol,
+                     numberOfToken     :this.props.location.state.numberOfToken,
+                     connector1Symbol  :this.props.location.state.connector1Symbol,
+                     connector1Deposit :this.props.location.state.connector1Deposit,
+                     pegDeposit        :this.props.location.state.pegDeposit,
                     ButtonState : false,
                 };
                 this.changeButtonState = this.changeButtonState.bind(this);
+                console.log(this.props.location.state.token1Address);
+                console.log(this.props.location.state.token2Address);
+                console.log(this.props.location.state.tokenSymbol);
+                console.log(this.props.location.state.numberOfToken);
+                console.log(this.props.location.state.connector1Symbol);
+                console.log(this.props.location.state.connector1Deposit);
+                console.log(this.props.location.state.pegDeposit);
         }
         changeButtonState(){
             this.setState({
@@ -85,7 +93,7 @@ export default class Create4 extends Component {
 
     createToken(){
         var  total_supply = this.props.location.state.numberOfToken+" "+this.props.location.state.tokenSymbol;
-        var  connector1 = this.props.location.state.connector1Deposit;
+        var  connector1 = this.props.location.state.connector1Deposit+" "+this.props.location.state.connector1Symbol;
         var address1 = this.props.location.state.token1Address;
         var address2 = this.props.location.state.token2Address;
         var  connector2 = this.props.location.state.pegDeposit+" "+"CET";

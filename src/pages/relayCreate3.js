@@ -12,6 +12,7 @@ export default class relayCreate3 extends Component {
             token2Address     : this.props.location.state.token2Address,
             tokenSymbol       :this.props.location.state.tokenSymbol,
             numberOfToken     :this.props.location.state.numberOfToken,
+            connector1Symbol  :this.props.location.state.connector1Symbol,
             connector1Deposit :this.props.location.state.connector1Deposit,
             pegDeposit        :this.props.location.state.pegDeposit,
             ButtonState : false,
@@ -21,6 +22,7 @@ export default class relayCreate3 extends Component {
         console.log(this.props.location.state.token2Address);
         console.log(this.props.location.state.tokenSymbol);
         console.log(this.props.location.state.numberOfToken);
+        console.log(this.props.location.state.connector1Symbol);
         console.log(this.props.location.state.connector1Deposit);
         console.log(this.props.location.state.pegDeposit);
     }
@@ -71,7 +73,7 @@ export default class relayCreate3 extends Component {
             data: {
               from: this.state.from,
               to: this.state.to,
-              quantity: `${this.state.connector1Deposit} ATDI`,
+              quantity: `${this.state.connector1Deposit} ${this.props.location.state.connector1Symbol}`,
               memo: "hello"
               //memo: parseInt(this.compareData[0].gameresult)+ parseInt(this.logIn.controls['pegDiposit'].value)
             }
@@ -89,6 +91,9 @@ export default class relayCreate3 extends Component {
 }
 
     render(){
+        var myStyle = {
+            color: '#FF0000'
+         }
         return (
             <div>
                 <div className="row createToken pad">
@@ -102,7 +107,7 @@ export default class relayCreate3 extends Component {
                                     <button onClick={()=>{this.handleTransfer(),this.changeButtonState()}} className="c7 br2">Transfer</button>
                                 </div>}
                                 <div className="full pad tr bn5x">
-                                    {<button disabled={!this.state.ButtonState} className="c7 br2" onClick={()=>this.props.history.push({pathname:'/relayCreate/4',state:{token1Address:this.state.token1Address,token2Address:this.state.token2Address,tokenSymbol:this.state.tokenSymbol,numberOfToken:this.state.numberOfToken,connector1Deposit:this.state.connector1Deposit,pegDeposit:this.state.pegDeposit}})}>NEXT</button>}
+                                    {<button disabled={!this.state.ButtonState} className="c7 br2" onClick={()=>this.props.history.push({pathname:'/relayCreate/4',state:{token1Address:this.state.token1Address,token2Address:this.state.token2Address,tokenSymbol:this.state.tokenSymbol,numberOfToken:this.state.numberOfToken,connector1Symbol:this.state.connector1Symbol,connector1Deposit:this.state.connector1Deposit,pegDeposit:this.state.pegDeposit}})}>NEXT</button>}
                                 </div>
                             </div>
                         </div>

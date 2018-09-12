@@ -71,7 +71,7 @@ export let createRelay = async function (total_supply, connector1, accaddress1, 
     console.log(max_supply);
     console.log(contract)
     let result = await contract.createrelay(account, total_supply, max_supply, connector1, accaddress1, connector2, accaddress2, { authorization:  account})
-    alert("You have successfully created smart token..")
+    alert("You have successfully created relay token..")
 }
 
 export let createSmart = async function (total_supply, connector1, accaddress1, weight,tokenSym, cb) {
