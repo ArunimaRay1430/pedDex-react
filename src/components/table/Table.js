@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../../style/Tabel.css';
+import '../../style/Table.css';
 // import { Link,history } from "react-router-dom";
 import Loader from '../loader/Loader';
 import axios from 'axios';
@@ -35,7 +35,7 @@ export default class componentName extends Component {
 
 
     buySell = (data) => {
-        //alert('this is it:');
+       
     }
 
     convertContinue = (path) => {
@@ -80,8 +80,8 @@ export default class componentName extends Component {
                                                 <i className="fa fa-check-circle f13 chk2B"></i>
                                             </a>
                                         </td>
-                                        <td>{(value.priceEachToken).toFixed(4)}</td>
-                                        <td>${value.marketCap.toFixed(4)}</td>
+                                        <td>{value.priceEachToken}</td>
+                                        <td>${value.marketCap}</td>
                                         <td>{value.liquidity}</td>
                                         <td>$15,000.00</td>
                                         <td>

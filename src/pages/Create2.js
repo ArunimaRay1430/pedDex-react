@@ -8,6 +8,7 @@ export default class Create2 extends Component {
             tokenAddress : this.props.location.state.tokenAddress,
             tokenSymbol:'',
             numberOfToken:'',
+            pegSymbol : '',
             pegDiposit:'',
             weight :'',
             fields: {},
@@ -44,6 +45,8 @@ export default class Create2 extends Component {
                                     
                                     <h5 className="f2 mg0 c3 mgtb mgf1">Number Of Token</h5>
                                     <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="number of token to be created"   className="f16 f3 c3" onChange={(e)=>this.setState({numberOfToken:e.target.value})} />
+                                    <h5 className="f2 mg0 c3 mgtb">PegDex Symbol</h5>
+                                    <input ref="token" onKeyPress={(e) => this.firstMethod(e)} type="text" placeholder="Token-Symbol" className="f16 f3 c3" onChange={(e)=>this.setState({pegSymbol:e.target.value})}   />
                                     <h5 className="f2 mg0 c3 mgtb mgf1">PEG:USD Deposit Amount</h5>
                                     <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="Initial PEG:USD Funding Deposit" className="f16 f3 c3" onChange={(e)=>this.setState({pegDiposit:e.target.value})} />
                                     <h5 className="f2 mg0 c3 mgtb mgf1">Weight</h5>
@@ -52,7 +55,7 @@ export default class Create2 extends Component {
                                 <div className="full pad tr bn5x">
                                     {/* <button className="c7 br2" onClick={()=>this.props.history.push({pathname:'/Create/3',state:{tokenSymbol:this.state.tokenSymbol, numberOfToken:this.state.numberOfToken,pegDiposit:this.state.pegDiposit}})}>NEXT</button> */}
 
-                                    {<button className="c7 br2" onClick={()=>{this.props.history.push({pathname:'/Create/4',state:{tokenSymbol:this.state.tokenSymbol, numberOfToken:this.state.numberOfToken,pegDiposit:this.state.pegDiposit,weight : this.state.weight , tokenAddress : this.props.location.state.tokenAddress}})}}>NEXT</button>}
+                                    {<button className="c7 br2" onClick={()=>{this.props.history.push({pathname:'/Create/4',state:{tokenSymbol:this.state.tokenSymbol, numberOfToken:this.state.numberOfToken,pegSymbol:this.state.pegSymbol,pegDiposit:this.state.pegDiposit,weight : this.state.weight , tokenAddress : this.props.location.state.tokenAddress}})}}>NEXT</button>}
                                 </div>
                             </div>
                         </div>

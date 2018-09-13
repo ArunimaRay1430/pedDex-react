@@ -11,6 +11,7 @@ export default class relayCreate2 extends Component {
             numberOfToken:'',
             connector1Symbol:'',
             connector1Deposit:'',
+            connector2Symbol:'',
             pegDeposit:'',
         };
         console.log("address1----",this.props.location.state.token1Address);
@@ -48,12 +49,14 @@ export default class relayCreate2 extends Component {
                                     <input type="text" onKeyPress={(e) => this.firstMethod(e)} placeholder="connector1 symbol" className="f16 f3 c3" onChange={(e)=>this.setState({connector1Symbol:e.target.value})} />
                                     <h5 className="f2 mg0 c3 mgtb mgf1">Deposit Amount For Connector1 </h5>
                                     <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="connector1 amount" className="f16 f3 c3" onChange={(e)=>this.setState({connector1Deposit:e.target.value})} />
+                                    <h5 className="f2 mg0 c3 mgtb mgf1">Connector2 Smbol </h5>
+                                    <input type="text" onKeyPress={(e) => this.firstMethod(e)} placeholder="connector2 symbol" className="f16 f3 c3" onChange={(e)=>this.setState({connector2Symbol:e.target.value})} />
                                     <h5 className="f2 mg0 c3 mgtb mgf1">PEG:USD Deposit Amount</h5>
                                     <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="Initial PEG:USD Funding Deposit" className="f16 f3 c3" onChange={(e)=>this.setState({pegDeposit:e.target.value})} />                    
 
                                 </div>
                                 <div className="full pad tr bn5x">
-                                    {<button className="c7 br2" onClick={()=>this.props.history.push({pathname:'/relayCreate/3',state:{token1Address:this.state.token1Address,token2Address:this.state.token2Address,tokenSymbol:this.state.tokenSymbol,numberOfToken:this.state.numberOfToken,connector1Symbol:this.state.connector1Symbol,connector1Deposit:this.state.connector1Deposit,pegDeposit:this.state.pegDeposit}})}>NEXT</button>}
+                                    {<button className="c7 br2" onClick={()=>this.props.history.push({pathname:'/relayCreate/3',state:{token1Address:this.state.token1Address,token2Address:this.state.token2Address,tokenSymbol:this.state.tokenSymbol,numberOfToken:this.state.numberOfToken,connector1Symbol:this.state.connector1Symbol,connector1Deposit:this.state.connector1Deposit,connector2Symbol:this.state.connector2Symbol,pegDeposit:this.state.pegDeposit}})}>NEXT</button>}
                                 </div>
                             </div>
                         </div>

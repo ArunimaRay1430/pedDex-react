@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import '../utils/methods.js'
 import '../style/Create.css'
-import { buyToken } from '../utils/methods.js';
-import { sellToken } from '../utils/methods.js';
 import axios from 'axios';
 export default class Convert extends Component {
     constructor(props) {
@@ -15,11 +13,14 @@ export default class Convert extends Component {
             tokensym: this.props.location.state.symbol,
             connsym: 'ATDI',
             connsymfixed: 'ATDI',
+            mrktcap:this.props.location.state.mrktcap,
+            liqui:this.props.location.state.liqui,
             echtokprice:this.props.location.state.price,
             mrp:parseFloat(1/this.props.location.state.price).toFixed(5)
         })
 
     }
+   
     componentWillMount()
     {
         console.log("welcome");
@@ -27,19 +28,7 @@ export default class Convert extends Component {
    
     search = () => {
         console.log("search");
-       
-        if (this.state.connsym=="ATDI") {
-            console.log(this.state.connsym)
-            var tokenConn = this.state.token1 + " " + this.state.connsym;
-            console.log("buy token--",tokenConn)
-            buyToken(tokenConn, this.state.tokensym, "");
-
-        } else {
-            var tokenSmt = this.state.token1 + " " + this.state.connsym;
-            console.log("sell token--",tokenSmt)
-            sellToken(tokenSmt, "");
-        }
-
+        this.props.history.push({pathname:'/Transfer/',state:{amount:this.state.token1,transsym:this.state.connsym,sym:this.state.tokensym}});       
     }
 
     convert = () => {
@@ -78,19 +67,19 @@ export default class Convert extends Component {
                                     <p className="mg0 f13">
                                         <a className="ellip d" href="">
                                             <i className="fa fa-check-circle"></i>
-                                            <span>0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C</span>
+                                            <span>eosiotoken12</span>
                                         </a>
                                     </p>
                                 </div>
                                 <div className="ui-lg-5 tr">
-                                    <button className="bgt cw byRBt f15 u br2 f1" onClick={(e) => { this.search(e) }}>Buy The SMART Token</button>
+                                    <button className="bgt cw byRBt f15 u br2 f1" onClick={(e) => { this.search(e) }}>Buy The Relay Token</button>
                                 </div>{/*--end of header part--*/}
                                 <div className="ui-lg-11 nopad infXo4 f13">
                                     <ul className="pad">
-                                        <li>Price: <span>${this.state.mrp}</span></li>
-                                        <li>Market Cap: <span>$135,355,181.60</span></li>
-                                        <li>Liquidity Depth: <span>$583,564.16</span></li>
-                                        <li>Relay: <span>0x607108c46bCE4cF6f86698E9B46E3270A734FeFe</span></li>
+                                        <li>Price: <span>${this.state.echtokprice}</span></li>
+                                        <li>Market Cap: <span>${this.state.mrktcap}</span></li>
+                                        <li>Liquidity Depth: <span>{this.state.liqui}</span></li>
+                                        <li>Relay: <span>eosiotoken12</span></li>
                                     </ul>
                                 </div>{/*-----End of rate,mar,more--*/}
                                 <div className="ui-lg-12 full nopad fullContainerSet">
@@ -98,8 +87,7 @@ export default class Convert extends Component {
                                     <div className="ui-lg-5 nopad ext5Ner">
                                         <label className="full d f13 c7">SPEND</label>
                                         <input className="f1 c3" type="text" placeholder={this.state.connsym} value={this.state.token1} onChange={(e) => { this.onChange(e) }} />
-                                        <time className="c3 f1"><h4>(in format of 0.0000)</h4></time>
-                                        <time className="c3 f1">Your Balance: 2000</time>
+                                        <time className="full d tr c1 f1">Your Balance: 2000</time>
                                     </div>
                                     <div className="ui-lg-2 tc">
                                         {<span className="fa fa-arrows-h pad c" onClick={this.convert}></span>}
@@ -117,7 +105,7 @@ export default class Convert extends Component {
                                             <tbody>
                                                 <tr>
                                                     <td>Rate:</td>
-                                                    <td className="tr">1 {this.state.connsymfixed} = ${parseFloat(this.state.echtokprice).toFixed(5)}</td>
+                                                    <td className="tr">1 ATDI = ${parseFloat(this.state.echtokprice).toFixed(5)}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Slippage:</td>

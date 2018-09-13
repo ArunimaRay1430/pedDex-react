@@ -8,48 +8,29 @@ export default class Create4 extends Component {
         super(props);
         console.log("checking----",this.props.location.state);
         this.state={
-             from:"innotical123",
-             to:"intermediate",
             tokenAddress : this.props.location.state.tokenAddress,
             tokenSymbol:this.props.location.state.tokenSymbol,
             numberOfToken:this.props.location.state.numberOfToken,
+            pegSymbol : this.props.location.state.pegSymbol,
             pegDiposit:this.props.location.state.pegDiposit,
             weight :this.props.location.state.weight,
             ButtonState : false,
         };
-        this.changeButtonState = this.changeButtonState.bind(this);
+        this.stateEos={
+            from:'',
+             to:"intermediate",
+             permission:""};
         console.log("this is the value",this.props.location.state.tokenAddress);
         console.log("this is the value",this.props.location.state.tokenSymbol);
         console.log("this is the value",this.props.location.state.numberOfToken);
         console.log("this is the value",this.props.location.state.pegDiposit);
         console.log("this is the value",this.props.location.state.weight);
     }
-    changeButtonState(){
-        this.setState({
-            ButtonState : true,
-        })
-    }
-
-    componentWillMount() {
-        console.log("window",window);
-           document.addEventListener('scatterLoaded', scatterExtension => {
-               console.log("window");
-            scatter = window.scatter;
-            console.log("scatter inside",scatter.identity.accounts["0"]);
-            let {name,authority}=scatter.identity.accounts["0"];
-            this.setState({from:name,permission:authority});
-        })
-       }
-
-       check= ()=>{
-           alert("called check add event")
-       }
-        handleTransfer=()=> {
+       handleTransfer = ()=> {
         let eosOptions = {
         chainId: "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca"
       };
-      
-    let network = {
+     let network = {
         protocol: "http", // Defaults to https
         blockchain: "eos",
         host: "193.93.219.219",
@@ -58,23 +39,28 @@ export default class Create4 extends Component {
       };
     console.log("transfer initiated");
     let scatter = window.scatter;
-    let eos= scatter.eos(network, Eos, eosOptions)
-    //console.log("this is the value",this.props.location.state.pegdDisposit)
+    console.log("scatter",scatter.identity.accounts[0].name);
+    let eos= scatter.eos(network, Eos, eosOptions);
+    this.stateEos.from = scatter.identity.accounts[0].name;
+    this.stateEos.permission = scatter.identity.accounts[0].authority;
+    console.log("state----",this.stateEos)
+    console.log("check",this.props.location.state.tokenAddress)
+    console.log("chechk---------",this.stateEos.pegDiposit);
     eos.transaction(
       {
         actions: [
           {
-            account: 'eosatidiumio',
+            account: this.props.location.state.tokenAddress,
             name: 'transfer',
             authorization: [{
-              actor: this.state.from,
+              actor: this.stateEos.from,
               //permission: this.state.permission
-              permission: 'active'
+              permission: this.stateEos.permission
             }],
             data: {
-              from: this.state.from,
-              to: this.state.to,
-              quantity: `${this.state.pegDiposit} ATDI`,
+              from: this.stateEos.from,
+              to: this.stateEos.to,
+              quantity: `${this.state.pegDiposit} ${this.props.location.state.pegSymbol}`,
               memo: "hello"
               //memo: parseInt(this.compareData[0].gameresult)+ parseInt(this.logIn.controls['pegDiposit'].value)
             }
@@ -87,13 +73,14 @@ export default class Create4 extends Component {
           console.log(result)
         }
       }
-      // options -- example: {broadcast: false}
+      //options -- example: {broadcast: false}
     )
 }
+
  createToken(){
       
     var  asset = this.props.location.state.numberOfToken+" "+this.props.location.state.tokenSymbol;
-    var  smart = this.props.location.state.pegDiposit +" "+"ATDI";
+    var  smart = this.props.location.state.pegDiposit +" "+this.props.location.state.pegSymbol;
     var address = this.props.location.state.tokenAddress;
     var wt = this.props.location.state.weight;
     var tokenSym = this.props.location.state.tokenSymbol
@@ -113,7 +100,7 @@ export default class Create4 extends Component {
                                 <div className="pad">
                                     <h5 className="f2 mg0 c3 mgtb">Deposit PEG:USD pegDiposit</h5>
                                     <h1>${this.props.location.state.pegDiposit}</h1>
-                                    <button className="c7 br2" onClick={()=>{ this.handleTransfer(),this.changeButtonState()}}>Transfer</button>
+                                    <button className="c7 br2" onClick={()=>{ this.handleTransfer(this.setState({ButtonState : true }))}}>Transfer</button>
                                     {/* <input type="text" placeholder="VeChain Token(VEN)" className="f16 f3 c3" /> */}
                                 </div>
                                 <div className="full pad tr bn5x">

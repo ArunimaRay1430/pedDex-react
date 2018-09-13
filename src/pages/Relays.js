@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import '../style/Tabel.css'
+import '../style/Table.css'
 import Button from '../components/button/Button';
 // import { Link } from "react-router-dom";
 import axios from 'axios';
@@ -15,7 +15,7 @@ export default class Relays extends Component {
         })
     }
     buySell = (data) => {
-        alert('this is it:');
+        
     }
     convertContinue = (path) => {
         console.log(path.priceEachToken);
@@ -76,7 +76,7 @@ export default class Relays extends Component {
                                             </a>
                                         </td>
                                         <td>{value.priceEachToken.toFixed(4)}</td>
-                                        <td>${value.marketCap.toFixed(4)}</td>
+                                        <td>${value.marketCap}</td>
                                         <td>{value.liquidity}</td>
                                         <td>$15,000.00</td>
                                         <td>

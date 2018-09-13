@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import '../style/Create.css';
+import axios from 'axios'
 import Create2 from './Create2';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 export default class Create extends Component {
@@ -8,6 +9,22 @@ export default class Create extends Component {
         this.state = {
             tokenAddress : '',
         };
+    }
+
+    handleClick()
+    {
+        const user = {
+            tokenAddress: this.state.tokenAddress
+          
+          };
+        //console.log(address)
+            axios.post('http://193.93.219.219:8888/v1/chain/get_abi', { user})
+              .then(response => {
+                
+                console.log(response);
+              })
+              
+          
     }
     render() {
         return (
@@ -19,12 +36,12 @@ export default class Create extends Component {
                                 <p className="c5x mg0 pad f3 f16 c3">List a New Token on PEGDEX</p>
                                 <div className="pad">
                                     <h5 className="f2 mg0 c3 mgtb">Token Address</h5>
-                                    <input type="text" placeholder="ERC20 Token Contract Address" className="f16 f3 c3" onChange={(e)=>this.setState({tokenAddress:e.target.value})} />
-                                    <small className="eror er">This contract object doesn't have address set yet, please set an address first.</small>
+                                    <input type="text" placeholder="Token Contract Address" className="f16 f3 c3" onChange={(e)=>this.setState({tokenAddress:e.target.value})} />
+                                    <small className="eror er">Please provide a valid account address with length 12..</small>
                                 </div>
                                 <div className="full pad tr bn5x">
                                    {/*  {<button className="c7 br2" onClick={()=>this.props.history.push('/Create/2',state:{tokenAddress:this.props.location.state.tokenAddress}})}>NEXT</button>} */}
-                                   {<button className="c7 br2" onClick={()=>this.props.history.push({pathname:'/Create/2',state:{tokenAddress:this.state.tokenAddress}})}>NEXT</button>}
+                                   {<button className="c7 br2" onClick={()=>{this.props.history.push({pathname:'/Create/2',state:{tokenAddress:this.state.tokenAddress}}),this.handleClick()}}>NEXT</button>}
                                 </div>
                             </div>
                         </div>

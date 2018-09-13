@@ -7,18 +7,20 @@ export default class Create4 extends Component {
     constructor(props){
         super(props);
                 this.state={
-                    from:"",
-                     to:"intermediate",
                      token1Address     : this.props.location.state.token1Address,
                      token2Address     : this.props.location.state.token2Address,
                      tokenSymbol       :this.props.location.state.tokenSymbol,
                      numberOfToken     :this.props.location.state.numberOfToken,
                      connector1Symbol  :this.props.location.state.connector1Symbol,
                      connector1Deposit :this.props.location.state.connector1Deposit,
+                     connector2Symbol  :this.props.location.state.connector2Symbol,
                      pegDeposit        :this.props.location.state.pegDeposit,
                     ButtonState : false,
                 };
-                this.changeButtonState = this.changeButtonState.bind(this);
+                this.stateEos={
+                    from:'',
+                     to:"intermediate",
+                     permission:""};
                 console.log(this.props.location.state.token1Address);
                 console.log(this.props.location.state.token2Address);
                 console.log(this.props.location.state.tokenSymbol);
@@ -27,29 +29,12 @@ export default class Create4 extends Component {
                 console.log(this.props.location.state.connector1Deposit);
                 console.log(this.props.location.state.pegDeposit);
         }
-        changeButtonState(){
-            this.setState({
-                ButtonState : true,
-            })
-        }
 
-        componentWillMount() {
-            console.log("window",window);
-               document.addEventListener('scatterLoaded', scatterExtension => {
-                   console.log("window");
-                scatter = window.scatter;
-                console.log("scatter inside",scatter.identity.accounts["0"]);
-                let {name,authority}=scatter.identity.accounts["0"];
-                console.log("--",name);
-                this.setState({from:name,permission:authority});
-                console.log("state-----",this.state)
-            });
-           }
-        handleTransfer=()=> {
+        handleTransfer = ()=> {
             let eosOptions = {
             chainId: "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca"
           };
-        let network = {
+         let network = {
             protocol: "http", // Defaults to https
             blockchain: "eos",
             host: "193.93.219.219",
@@ -58,8 +43,12 @@ export default class Create4 extends Component {
           };
         console.log("transfer initiated");
         let scatter = window.scatter;
-        let eos= scatter.eos(network, Eos, eosOptions)
-        console.log("this is the value",this.props.location.state.pegdDisposit)
+        console.log("scatter",scatter.identity.accounts[0].name);
+        let eos= scatter.eos(network, Eos, eosOptions);
+        this.stateEos.from = scatter.identity.accounts[0].name;
+        this.stateEos.permission = scatter.identity.accounts[0].authority;
+        console.log("state----",this.stateEos);
+        console.log("check",this.props.location.state.token2Address);
         eos.transaction(
           {
             actions: [
@@ -67,14 +56,14 @@ export default class Create4 extends Component {
                 account: this.props.location.state.token2Address,
                 name: 'transfer',
                 authorization: [{
-                  actor: this.state.from,
+                  actor: this.stateEos.from,
                   //permission: this.state.permission
-                  permission: 'active'
+                  permission: this.stateEos.permission
                 }],
                 data: {
-                  from: this.state.from,
-                  to: this.state.to,
-                  quantity: `${this.state.pegDeposit} CET`,
+                  from: this.stateEos.from,
+                  to: this.stateEos.to,
+                  quantity: `${this.state.pegDeposit} ${this.props.location.state.connector2Symbol}`,
                   memo: "hello"
                   //memo: parseInt(this.compareData[0].gameresult)+ parseInt(this.logIn.controls['pegDiposit'].value)
                 }
@@ -87,6 +76,7 @@ export default class Create4 extends Component {
               console.log(result)
             }
           }
+          //options -- example: {broadcast: false}
         )
     }
     
@@ -96,7 +86,7 @@ export default class Create4 extends Component {
         var  connector1 = this.props.location.state.connector1Deposit+" "+this.props.location.state.connector1Symbol;
         var address1 = this.props.location.state.token1Address;
         var address2 = this.props.location.state.token2Address;
-        var  connector2 = this.props.location.state.pegDeposit+" "+"CET";
+        var  connector2 = this.props.location.state.pegDeposit+" "+this.props.location.state.connector2Symbol;
         var tokenSym = this.props.location.state.tokenSymbol;
       createRelay(total_supply,connector1,address1,connector2,address2,tokenSym);   
      }
@@ -113,7 +103,7 @@ export default class Create4 extends Component {
                                     <h5 className="f2 mg0 c3 mgtb">Deposit PEG:USD pegDeposit</h5>
                                     <h1>${this.props.location.state.pegDeposit}</h1>
                                     {/* <button className="c7 br2" onClick={this.handleTransfer}>Transfer</button> */}
-                                    <button onClick={()=>{this.handleTransfer(),this.changeButtonState()}} className="c7 br2">Transfer</button>
+                                    <button onClick={()=>{this.handleTransfer(this.setState({ButtonState : true }))}} className="c7 br2">Transfer</button>
                                 </div>
                                 <div className="full pad tr bn5x">
                                 <button disabled={!this.state.ButtonState} className="c7 br2" onClick = {() => this.createToken()}>CREATE</button>

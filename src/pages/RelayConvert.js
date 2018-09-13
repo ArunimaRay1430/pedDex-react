@@ -31,10 +31,9 @@ export default class RelayConvert extends Component {
     }
    
     search = () => {
-        console.log("search");
-        var connSym = this.state.token1 + " " + this.state.conn1sym;
-        console.log("convert--",connSym);       
-        convertToken(connSym,this.state.sym,this.state.conn2sym,"")
+        console.log("search");       
+        this.props.history.push({pathname:'/RelayTransfer/',state:{amount:this.state.token1,sym1:this.state.conn1sym,sym2:this.state.conn2sym,sym:this.state.sym}});       
+      
     }
 
     convert = () => {
@@ -81,7 +80,7 @@ export default class RelayConvert extends Component {
                                     <p className="mg0 f13">
                                         <a className="ellip d" href="">
                                             <i className="fa fa-check-circle"></i>
-                                            <span>0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C</span>
+                                            <span>eosiotoken12</span>
                                         </a>
                                     </p>
                                 </div>
@@ -94,7 +93,7 @@ export default class RelayConvert extends Component {
                                         <li>Price for Eachtoken: <span>${this.state.echtokenprice}</span></li>
                                         <li>Market Cap: <span>${this.state.mrktcap}</span></li>
                                         <li>Liquidity Depth: <span>${this.state.liqui}</span></li>
-                                        <li>Relay: <span>0x607108c46bCE4cF6f86698E9B46E3270A734FeFe</span></li>
+                                        <li>Relay: <span>eosiotoken12</span></li>
                                     </ul>
                                     
                                 </div>{/*-----End of rate,mar,more--*/}
@@ -103,8 +102,7 @@ export default class RelayConvert extends Component {
                                     <div className="ui-lg-5 nopad ext5Ner">
                                         <label className="full d f13 c7">SPEND</label>
                                         <input className="f1 c3" type="text" placeholder={this.state.conn1sym} value={this.state.token1} onChange={(e) => { this.onChange(e) }} />
-                                        <time className="c3 f1"><h4>(in format of 0.0000)</h4></time>
-                                        <time className="c3 f1">Your Balance: 2000</time>
+                                        <time className="full d tr c1 f1">Your Balance: 2000</time>
                                     </div>
                                     <div className="ui-lg-2 tc">
                                         {<span className="fa fa-arrows-h pad c" onClick={this.convert}></span>}
