@@ -76,7 +76,7 @@ export default class Relays extends Component {
                                             </a>
                                         </td>
                                         <td>{value.priceEachToken.toFixed(4)}</td>
-                                        <td>${value.marketCap}</td>
+                                        <td>${value.marketCap.toFixed(4)}</td>
                                         <td>{value.liquidity}</td>
                                         <td>$15,000.00</td>
                                         <td>

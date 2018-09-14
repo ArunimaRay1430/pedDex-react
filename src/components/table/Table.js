@@ -80,8 +80,8 @@ export default class componentName extends Component {
                                                 <i className="fa fa-check-circle f13 chk2B"></i>
                                             </a>
                                         </td>
-                                        <td>{value.priceEachToken}</td>
-                                        <td>${value.marketCap}</td>
+                                        <td>{value.priceEachToken.toFixed(4)}</td>
+                                        <td>${value.marketCap.toFixed(4)}</td>
                                         <td>{value.liquidity}</td>
                                         <td>$15,000.00</td>
                                         <td>
