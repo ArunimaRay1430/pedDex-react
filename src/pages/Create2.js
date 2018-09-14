@@ -41,16 +41,16 @@ export default class Create2 extends Component {
                                 <p className="c5x mg0 pad f3 f16 c3">List a New Token on PEGDEX</p>
                                 <div className="pad">
                                     <h5 className="f2 mg0 c3 mgtb">Token</h5>
-                                    <input ref="token" onKeyPress={(e) => this.firstMethod(e)} type="text" placeholder="Token-Symbol" className="f16 f3 c3" onChange={(e)=>this.setState({tokenSymbol:e.target.value})}   />
+                                    <input ref="token" onKeyPress={(e) => this.firstMethod(e)} type="text" placeholder="Token-Symbol (in UpperCase)" className="f16 f3 c3" onChange={(e)=>this.setState({tokenSymbol:e.target.value})}   />
                                     
                                     <h5 className="f2 mg0 c3 mgtb mgf1">Number Of Token</h5>
-                                    <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="number of token to be created"   className="f16 f3 c3" onChange={(e)=>this.setState({numberOfToken:e.target.value})} />
+                                    <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="number of token to be created (format : 0.0000)"   className="f16 f3 c3" onChange={(e)=>this.setState({numberOfToken:e.target.value})} />
                                     <h5 className="f2 mg0 c3 mgtb">PegDex Symbol</h5>
-                                    <input ref="token" onKeyPress={(e) => this.firstMethod(e)} type="text" placeholder="Token-Symbol" className="f16 f3 c3" onChange={(e)=>this.setState({pegSymbol:e.target.value})}   />
+                                    <input ref="token" onKeyPress={(e) => this.firstMethod(e)} type="text" placeholder="Connector token-Symbol (in UpperCase)" className="f16 f3 c3" onChange={(e)=>this.setState({pegSymbol:e.target.value})}   />
                                     <h5 className="f2 mg0 c3 mgtb mgf1">PEG:USD Deposit Amount</h5>
-                                    <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="Initial PEG:USD Funding Deposit" className="f16 f3 c3" onChange={(e)=>this.setState({pegDiposit:e.target.value})} />
+                                    <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="Initial PEG:USD Funding Deposit (format : 0.0000)" className="f16 f3 c3" onChange={(e)=>this.setState({pegDiposit:e.target.value})} />
                                     <h5 className="f2 mg0 c3 mgtb mgf1">Weight</h5>
-                                    <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="connectorWeight" className="f16 f3 c3" onChange={(e)=>this.setState({weight:e.target.value})}/>
+                                    <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="connector Weight (> .7) " className="f16 f3 c3" onChange={(e)=>this.setState({weight:e.target.value})}/>
                                 </div>
                                 <div className="full pad tr bn5x">
                                     {/* <button className="c7 br2" onClick={()=>this.props.history.push({pathname:'/Create/3',state:{tokenSymbol:this.state.tokenSymbol, numberOfToken:this.state.numberOfToken,pegDiposit:this.state.pegDiposit}})}>NEXT</button> */}

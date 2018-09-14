@@ -4,6 +4,7 @@ import '../style/Create.css';
 import Eos from "eosjs";
 var scatter={};
 export default class Create4 extends Component {
+    stateEos= {}
     constructor(props){
         super(props);
         console.log("checking----",this.props.location.state);

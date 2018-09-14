@@ -41,7 +41,7 @@ export default class Create extends Component {
                                 </div>
                                 <div className="full pad tr bn5x">
                                    {/*  {<button className="c7 br2" onClick={()=>this.props.history.push('/Create/2',state:{tokenAddress:this.props.location.state.tokenAddress}})}>NEXT</button>} */}
-                                   {<button className="c7 br2" onClick={()=>{this.props.history.push({pathname:'/Create/2',state:{tokenAddress:this.state.tokenAddress}}),this.handleClick()}}>NEXT</button>}
+                                   {<button className="c7 br2" onClick={()=>{this.props.history.push({pathname:'/Create/2',state:{tokenAddress:this.state.tokenAddress}})}}>NEXT</button>}
                                 </div>
                             </div>
                         </div>
