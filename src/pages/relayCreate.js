@@ -25,7 +25,7 @@ export default class Create extends Component {
                                     <h5 className="f2 mg0 c3 mgtb">Token Address (Connector2)</h5>
                                     <input type="text" placeholder="connector2 address" className="f16 f3 c3" onChange={(e)=>this.setState({token2Address:e.target.value})} />
 
-                                    <small className="eror er">This contract object doesn't have address set yet, please set an address first.</small>
+                                    <small className="eror er">Please provide a valid account address with length 12..</small>
                                 </div>
                                 <div className="full pad tr bn5x">
                                 {<button className="c7 br2" onClick={()=>this.props.history.push({pathname:'/relayCreate/2',state:{token1Address:this.state.token1Address,token2Address:this.state.token2Address}})}>NEXT</button>}

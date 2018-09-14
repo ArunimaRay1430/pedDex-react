@@ -102,7 +102,7 @@ export default class RelayTransfer extends Component {
                                 <div className="pad">
                                     <h5 className="f2 mg0 c3 mgtb">Token Address (Connector1)</h5>
                                     <input type="text" placeholder="connector1 address" className="f16 f3 c3" onChange={(e)=>this.setState({tokenAddress:e.target.value})} />
-                                    <small className="eror er">This contract object doesn't have address set yet, please set an address first.</small>
+                                    <small className="eror er">Please provide a valid account address with length 12..</small>
                                 </div>
                                 <div className="full pad tr bn5x">
                                 {<button className="c7 br2" onClick={()=>{this.handleTransfer()}}>NEXT</button>}

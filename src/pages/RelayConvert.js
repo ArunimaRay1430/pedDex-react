@@ -101,7 +101,7 @@ export default class RelayConvert extends Component {
                                     <h5 className="c3 f1">Convert BNT</h5>
                                     <div className="ui-lg-5 nopad ext5Ner">
                                         <label className="full d f13 c7">SPEND</label>
-                                        <input className="f1 c3" type="text" placeholder={this.state.conn1sym} value={this.state.token1} onChange={(e) => { this.onChange(e) }} />
+                                        <input className="f1 c3" type="text" placeholder={this.state.conn1sym + " (format 0.0000)"} value={this.state.token1} onChange={(e) => { this.onChange(e) }} />
                                         <time className="full d tr c1 f1">Your Balance: 2000</time>
                                     </div>
                                     <div className="ui-lg-2 tc">
