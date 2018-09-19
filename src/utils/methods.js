@@ -66,6 +66,7 @@ export let createRelay = async function (total_supply, connector1, accaddress1, 
     console.log("create relay called");
     const eos = scatter.eos(network, Eos, eosOptions);
     let account=scatter.identity.accounts[0].name;
+  
     let contract = await eos.contract("eosiotoken12")
     var max_supply = "100000.0000" + " " + tokenSym;
     console.log(max_supply);

@@ -6,6 +6,7 @@ import axios from 'axios';
 import { myTest } from '../../service/Http_service';
 
 import Button from '../button/Button';
+
 export default class componentName extends Component {
 
     constructor(props) {
@@ -13,12 +14,14 @@ export default class componentName extends Component {
         this.state = {
             data: [],
             isLoading: false,
+            isL: false,
         }
         console.log("symbol---",this.state.sym)
     }
 
     componentDidMount = () => {
         this.getTableData()
+        //this.getBalance()
     }
 
     getTableData = () => {
@@ -32,6 +35,40 @@ export default class componentName extends Component {
             this.setState({ isLoading: false })
         })
     }
+    
+   /*  getBalance = () => {
+        /* const user = {
+            code: 'eosatidiumio',
+     account: 'smartcreate1',
+     symbol: 'ATDI'
+          
+          };
+        this.setState({ isL: true })
+        axios.post(`http://193.93.219.219:8888/v1/chain/get_currency_balance`, { user })
+      .then(res => {
+        console.log(res);
+        console.log(this.state.name);
+      }) 
+
+     
+
+      var request = require("request");
+
+var options = { method: 'POST',
+  url: 'http://193.93.219.219:8888/v1/chain/get_currency_balance',
+  body: 
+   { code: 'eosatidiumio',
+     account: 'smartcreate1',
+     symbol: 'ATDI' },
+  json: true };
+
+request(options, function (error, response, body) {
+  //if (error) throw new Error(error);
+ // console.log(response);
+  console.log("----",body);
+});
+    } */
+
 
 
     buySell = (data) => {
