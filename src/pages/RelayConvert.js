@@ -54,11 +54,11 @@ export default class RelayConvert extends Component {
 
     onChange(e) {
         if (this.state.conn1sym=="ATDI") {
-            this.setState({ token1: e.target.value })
+            this.setState({ token1: parseFloat(e.target.value).toFixed(4) })
             console.log("onchange to")
             this.convertto();
         } else {
-            this.setState({ token1: e.target.value })
+            this.setState({ token1: parseFloat(e.target.value).toFixed(4) })
             console.log("onchange from")
             this.convertfrom();
         }

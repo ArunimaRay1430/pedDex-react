@@ -3,8 +3,33 @@ import '../../style/Header.css';
 import Button from '../button/Button';
 import { Link } from "react-router-dom";
 import { scatterLogin, transfer, createRelay, createSmart, buyToken, sellToken, convertToken } from "../../utils/methods"
-
+import { getBal } from '../../utils/methods.js';
+import * as Eos from 'eosjs';
 var scatter = {};
+const network = {
+    protocol: 'http', // Defaults to https
+    blockchain: "eos",
+    host: "193.93.219.219",
+    port: 8888,
+    chainId:
+        "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca"
+};
+
+const eosOptions = {
+    chainId:
+        "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca"
+};
+const requiredFields = {
+    accounts: [
+        {
+            blockchain: "eos",
+            host: "193.93.219.219",
+            port: 8888,
+            chainId:
+                "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca"
+        }
+    ]
+};
 export default class Header extends Component {
     constructor() {
         super();
@@ -23,10 +48,12 @@ export default class Header extends Component {
                 console.log("1==============")
                 this.setState({ login: "Logout" })
                 this.setState({ scatterAvailable: true });
+                console.log(this.state.login)
             }
             else {
                 console.log("2==========")
                 this.setState({ login: "Login" })
+                console.log(this.state.login)
             }
             console.log("scatter inside", scatter)
             // console.log("scatterLoaded",scatter);
@@ -80,9 +107,11 @@ export default class Header extends Component {
             scatterLogin((err, value) => {
                 this.setState({ login: "Logout" })
             })
+           
 
-        }
+        
     }
+}
 
     hello() {
         console.log("in hello");

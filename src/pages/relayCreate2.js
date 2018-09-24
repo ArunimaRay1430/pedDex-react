@@ -19,7 +19,7 @@ export default class relayCreate2 extends Component {
     }
 
     firstMethod(e) {
-        const re = /[A-Z]/;
+        const re = /[a-zA-Z]/;
         if (!re.test(e.key)) {
           e.preventDefault();
         }
@@ -42,17 +42,17 @@ export default class relayCreate2 extends Component {
                                 <p className="c5x mg0 pad f3 f16 c3">List a New Token on PEGDEX</p>
                                 <div className="pad">
                                      <h5 className="f2 mg0 c3 mgtb">Token</h5>
-                                    <input ref="first" onKeyPress={(e) => this.firstMethod(e)} type="text" placeholder="token-symbol (in UpperCase)" className="f16 f3 c3" onChange={(e)=>this.setState({tokenSymbol:e.target.value})} />
+                                    <input ref="first" onKeyPress={(e) => this.firstMethod(e)} type="text" placeholder="token-symbol (in UpperCase)" value = {this.state.tokenSymbol} className="f16 f3 c3" onChange={(e)=>this.setState({tokenSymbol:e.target.value.toUpperCase()})} />
                                     <h5 className="f2 mg0 c3 mgtb">Number Of Token</h5>
-                                    <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="number of token to be created (format : 0.0000)" className="f16 f3 c3" onChange={(e)=>this.setState({numberOfToken:e.target.value})} />
+                                    <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="number of token to be created (format : 0.0000)" className="f16 f3 c3" onChange={(e)=>this.setState({numberOfToken:parseFloat(e.target.value).toFixed(4)})} />
                                     <h5 className="f2 mg0 c3 mgtb mgf1">Connector1 Symbol</h5>
-                                    <input type="text" onKeyPress={(e) => this.firstMethod(e)} placeholder="connector1 symbol (in UpperCase)" className="f16 f3 c3" onChange={(e)=>this.setState({connector1Symbol:e.target.value})} />
+                                    <input type="text" onKeyPress={(e) => this.firstMethod(e)} placeholder="connector1 symbol (in UpperCase)" value = {this.state.connector1Symbol} className="f16 f3 c3" onChange={(e)=>this.setState({connector1Symbol:e.target.value.toUpperCase()})} />
                                     <h5 className="f2 mg0 c3 mgtb mgf1">Deposit Amount For Connector1 </h5>
-                                    <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="connector1 amount (format : 0.0000)" className="f16 f3 c3" onChange={(e)=>this.setState({connector1Deposit:e.target.value})} />
+                                    <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="connector1 amount (format : 0.0000)" className="f16 f3 c3" onChange={(e)=>this.setState({connector1Deposit:parseFloat(e.target.value).toFixed(4)})} />
                                     <h5 className="f2 mg0 c3 mgtb mgf1">Connector2 Smbol </h5>
-                                    <input type="text" onKeyPress={(e) => this.firstMethod(e)} placeholder="connector2 symbol (in UpperCase)" className="f16 f3 c3" onChange={(e)=>this.setState({connector2Symbol:e.target.value})} />
+                                    <input type="text" onKeyPress={(e) => this.firstMethod(e)} placeholder="connector2 symbol (in UpperCase)" value = {this.state.connector2Symbol} className="f16 f3 c3" onChange={(e)=>this.setState({connector2Symbol:e.target.value.toUpperCase()})} />
                                     <h5 className="f2 mg0 c3 mgtb mgf1">PEG:USD Deposit Amount</h5>
-                                    <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="Initial PEG:USD Funding Deposit (format : 0.0000)" className="f16 f3 c3" onChange={(e)=>this.setState({pegDeposit:e.target.value})} />                    
+                                    <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="Initial PEG:USD Funding Deposit (format : 0.0000)" className="f16 f3 c3" onChange={(e)=>this.setState({pegDeposit:parseFloat(e.target.value).toFixed(4)})} />                    
 
                                 </div>
                                 <div className="full pad tr bn5x">

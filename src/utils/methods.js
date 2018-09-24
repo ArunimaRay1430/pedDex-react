@@ -104,6 +104,35 @@ export let buyToken = async function (input,stoken, cb) {
     let result = await contract.buytoken(input, stoken, account, { authorization: account})
     alert("Buy-Token is successfully completed..")
 }
+export let getBal = async function (stoken, cb) {
+
+    console.log("hello")
+    let scatter = window.scatter;
+    var pubkey = "EOS8ZjT6ahwoz39srfqR53rNYTb5KXm1CysmZYyvHHkUa2xAgmqVL";
+    console.log("getBalance called");
+    const eos = scatter.eos(network, Eos, eosOptions);
+   // let account=scatter.identity.accounts[0].name;
+   let account = 'smartcreate1';
+    let resultR = await eos.getTableRows({ code: 'eosatidiumio', scope: account, table: 'accounts',limit : 50, json: true, })
+    let bal = []
+    resultR.rows.forEach((rowR) => {
+      console.log('row', rowR)
+      let res = rowR.balance.split(" ");
+      if (res[1] == 'ATDI') {
+        let token = {};
+        console.log('row', rowR)
+        
+        token.bal = rowR.balance;
+        
+        console.log("tokenbobj", token)
+        bal.push(token)
+       
+
+      }
+    })
+    //let result = await contract.buytoken(input, stoken, account, { authorization: account})
+    alert("Buy-Token is successfully completed..")
+}
 
 export let sellToken = async function (input, cb) {
 

@@ -43,10 +43,10 @@ export default class Convert extends Component {
 
     onChange(e) {
         if (this.state.connsym=="ATDI") {
-            this.setState({ token1: e.target.value })
+            this.setState({ token1: parseFloat(e.target.value).toFixed(4) }) 
             this.convertto();
         } else {
-            this.setState({ token1: e.target.value })
+            this.setState({ token1: parseFloat(e.target.value).toFixed(4) })
             this.convertfrom();
         }
 

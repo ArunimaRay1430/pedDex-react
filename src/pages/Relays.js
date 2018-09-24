@@ -4,6 +4,33 @@ import Button from '../components/button/Button';
 // import { Link } from "react-router-dom";
 import axios from 'axios';
 import Loader from "../components/loader/Loader";
+import * as Eos from 'eosjs';
+var scatter = {};
+
+const network = {
+    protocol: 'http', // Defaults to https
+    blockchain: "eos",
+    host: "193.93.219.219",
+    port: 8888,
+    chainId:
+        "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca"
+};
+
+const eosOptions = {
+    chainId:
+        "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca"
+};
+const requiredFields = {
+    accounts: [
+        {
+            blockchain: "eos",
+            host: "193.93.219.219",
+            port: 8888,
+            chainId:
+                "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca"
+        }
+    ]
+};
 
 export default class Relays extends Component {
 // import { Link } from "react-router-dom";
@@ -14,16 +41,13 @@ export default class Relays extends Component {
             isLoading:false,
         })
     }
-    buySell = (data) => {
-        
-    }
-    convertContinue = (path) => {
-        console.log(path.priceEachToken);
-        this.props.history.push('/RelayConvert/',{symbol1:path.connector1Symbol,symbol2:path.connector2Symbol, price:path.priceEachConn,symbol:path.symbol,mrktcap:path.marketCap,liqui:path.liquidity, pricetoken:path.priceEachToken})
-          
-      } 
+  
+   
     componentDidMount = () => {
-        this.tableDataFromRelay();  
+        this.setState({ isLoading: true })
+        this.tableDataFromRelay()
+       
+        console.log("outside ", this.state.bal);
     }
 
     tableDataFromRelay = () =>{
@@ -33,12 +57,63 @@ export default class Relays extends Component {
             console.log(resp,"--hey resp");
             this.setState({data: resp})
             this.setState({ isLoading: false })
+            this.setAmount();
         }, (error) => {
             console.log(error)
             this.setState({ isLoading: false })
         })
     }
-    
+
+    setAmount = () => {
+
+        document.addEventListener('scatterLoaded', async (scatterExtension) => {
+            this.setState({ login: true })
+
+            scatter = window.scatter;
+            if (scatter.identity) {
+                console.log("1==============")
+                this.setState({ login: "Logout" })
+                this.setState({ scatterAvailable: true });
+                this.setState({ scatter: true });
+                const eos = scatter.eos(network, Eos, eosOptions)
+                this.state.account = scatter.identity.accounts[0].name
+
+                let curr = []
+                // for (var i = 0; i < this.state.data.length; i++) {
+                //     let symbol = this.state.data[i].symbol;
+                //     eos.getCurrencyBalance('eosiotoken12', this.state.account, symbol).then(res => {
+                //         curr[i] = res[0];
+                //     })
+                // }
+                let data = await this.state.data.map((val, index) => {
+                    let symbol = val.symbol;
+                    eos.getCurrencyBalance('eosiotoken12', this.state.account, symbol).then(res => {
+                        // val.balance = res[0];
+                        this.state.data[index].balance = res[0];
+                        this.setState({ data: this.state.data })
+
+                    })
+
+                })
+
+               
+            }
+            else {
+
+            }
+
+        })
+    }
+
+    buySell = (data) => {
+        
+    }
+
+    convertContinue = (path) => {
+        console.log(path.priceEachToken);
+        this.props.history.push('/RelayConvert/',{symbol1:path.connector1Symbol,symbol2:path.connector2Symbol, price:path.priceEachConn,symbol:path.symbol,mrktcap:path.marketCap,liqui:path.liquidity, pricetoken:path.priceEachToken})
+          
+      } 
 
     render() {
         return (
@@ -78,7 +153,7 @@ export default class Relays extends Component {
                                         <td>{value.priceEachToken.toFixed(4)}</td>
                                         <td>${value.marketCap.toFixed(4)}</td>
                                         <td>{value.liquidity}</td>
-                                        <td>$15,000.00</td>
+                                        {<td >{(value.balance === undefined) ? 'NA' : value.balance}</td>}
                                         <td>
                                         <button className="bySel" onClick={(e) => this.buySell(value.priceEachRel)}>Buy / Sell</button>
                                     </td>
