@@ -162,6 +162,36 @@ export let convertToken = async function (input,symbol,symbol2, cb) {
     let result = await contract.convert(input,symbol,symbol2,account, { authorization: account})
     alert("Token convertion is successfully completed..")
 }
+
+export let convertToRelay = async function (input,symbol, cb) {
+
+    console.log("hello")
+    let scatter = window.scatter;
+    var pubkey = "EOS8ZjT6ahwoz39srfqR53rNYTb5KXm1CysmZYyvHHkUa2xAgmqVL";
+    console.log("convert-to called");
+    const eos = scatter.eos(network, Eos, eosOptions);
+    let account=scatter.identity.accounts[0].name;
+    let contract = await eos.contract("eosiotoken12")
+    console.log(contract)
+    console.log("---",input,symbol,account)
+    let result = await contract.torelay(input,symbol,account, { authorization: account})
+    alert("Convertion to relay token is successfully completed..")
+}
+
+export let convertFromRelay = async function (input,symbol, cb) {
+
+    console.log("hello")
+    let scatter = window.scatter;
+    var pubkey = "EOS8ZjT6ahwoz39srfqR53rNYTb5KXm1CysmZYyvHHkUa2xAgmqVL";
+    console.log("convert-from called");
+    const eos = scatter.eos(network, Eos, eosOptions);
+    let account=scatter.identity.accounts[0].name;
+    let contract = await eos.contract("eosiotoken12")
+    console.log(contract)
+    console.log("---",input,symbol,account)
+    let result = await contract.convertfrom(input,symbol,account, { authorization: account})
+    alert("Convertion from relay token is successfully completed..")
+}
 /* export function createRelay(account_nameissuer,
     total_supply,
     max_supply,
