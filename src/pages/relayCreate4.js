@@ -69,15 +69,20 @@ export default class Create4 extends Component {
                 }
               }
             ]
-          }, (err, result) => {
-            if (err) {
-              console.log(err)
-            } else {
-              console.log(result)
+          }).catch(error => {
+            this.setState({
+                ButtonState: false
+            })
+            console.log("error---", error)
+            if (error.type == undefined) {
+                const parsedResponse = JSON.parse(error);
+                alert(parsedResponse.error.details[0].message);
             }
-          }
-          //options -- example: {broadcast: false}
-        )
+            else {
+                console.log(error.message);
+            }
+        });
+
     }
     
 
@@ -103,7 +108,7 @@ export default class Create4 extends Component {
                                     <h5 className="f2 mg0 c3 mgtb">Deposit PEG:USD pegDeposit</h5>
                                     <h1>${this.props.location.state.pegDeposit}</h1>
                                     {/* <button className="c7 br2" onClick={this.handleTransfer}>Transfer</button> */}
-                                    <button onClick={()=>{this.handleTransfer(this.setState({ButtonState : true }))}} className="c7 br2">Transfer</button>
+                                    <button onClick={()=>{this.handleTransfer()}} className="c7 br2">Transfer</button>
                                 </div>
                                 <div className="full pad tr bn5x">
                                 <button disabled={!this.state.ButtonState} className="c7 br2" onClick = {() => this.createToken()}>CREATE</button>

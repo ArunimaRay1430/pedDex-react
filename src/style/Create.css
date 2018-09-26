@@ -96,3 +96,44 @@
 .ad-settings > h5{
     
 }
+.pos1{
+    margin-top:30px;
+    margin-left:350px;
+   }
+   .pos{
+  margin-top:10px;
+  margin-left:100px;
+  }
+  .pos2{
+  margin-top:10px;
+  margin-right:45px;
+  }
+  .div2{ 
+  margin-left:280px;
+  color:black;
+  }
+  .div3{
+  margin-top:25px;
+  margin-bottom:10px; 
+  margin-left:350px;
+  color :green
+  }
+  .div4{
+  margin-left:220px
+  }
+  .modal-content{
+  background: white;
+  position: fixed;
+  z-index: 1000;
+  padding: 24px 24px 0;
+  border-bottom: 0;
+  margin: auto;
+  top: 10%;
+  left: 30%;
+  border: 1PX SOLID #DBDBDB;
+  transition: all .3ms ease-in;
+  
+  }
+  .green-border:hover{
+  border: 1px solid green;
+  }

@@ -49,14 +49,6 @@ export let transfer = async function (from, to, amount, memo, cb) {
     let result = await contract.transfer(from, to, amount, memo, { authorization: "smartcreate1@active" })
 }
 
-/* export let createRelay = async function (issuer,total_supply,max_supply,connector1,accaddress1,connector2,accaddress2,cb){
-    let scatter = window.scatter;
-var pubkey = "EOS8ZjT6ahwoz39srfqR53rNYTb5KXm1CysmZYyvHHkUa2xAgmqVL";
-    console.log("create relay called");
-    const eos = scatter.eos( network, Eos, eosOptions);
-    let contract = await eos.contract("eosiotoken12")
-    let result = await contract.createRelay(issuer,total_supply,max_supply,connector1,accaddress1,connector2,accaddress2,{authorization:"eosiotoken12@active"})
-} */
 
 export let createRelay = async function (total_supply, connector1, accaddress1, connector2, accaddress2,tokenSym, cb) {
 
@@ -71,8 +63,24 @@ export let createRelay = async function (total_supply, connector1, accaddress1, 
     var max_supply = "100000.0000" + " " + tokenSym;
     console.log(max_supply);
     console.log(contract)
-    let result = await contract.createrelay(account, total_supply, max_supply, connector1, accaddress1, connector2, accaddress2, { authorization:  account})
-    alert("You have successfully created relay token..")
+    await contract.createrelay(account, total_supply, max_supply, connector1, accaddress1, connector2, 
+        accaddress2, { authorization:  account}).then(result => {
+            alert("You have successfully created relay token..")
+
+        }).catch(error => {
+            console.log("error---", error)
+            if(error.type==undefined)
+            {
+                const parsedResponse = JSON.parse(error);
+           alert(parsedResponse.error.details[0].message);
+            }
+            else
+            {
+                console.log(error.message);
+            }
+
+        });
+   
 }
 
 export let createSmart = async function (total_supply, connector1, accaddress1, weight,tokenSym, cb) {
@@ -87,8 +95,23 @@ export let createSmart = async function (total_supply, connector1, accaddress1, 
     console.log(contract)
     var max_supp = "100000.0000" + " " + tokenSym;
     console.log(max_supp);
-    let result = await contract.createsmart(account, total_supply, max_supp, connector1, accaddress1, weight, { authorization:  account})
-    alert("You have successfully created smart token..")
+    let result = await contract.createsmart(account, total_supply, max_supp, connector1, 
+        accaddress1, weight, { authorization:  account}).then(result => {
+            alert("You have successfully created smart token..")
+
+        }).catch(error => {
+            console.log("error---", error)
+            if(error.type==undefined)
+            {
+                const parsedResponse = JSON.parse(error);
+                alert(parsedResponse.error.details[0].message);
+            }
+            else
+            {
+                console.log(error.message);
+            }
+        });
+   
 }
 
 export let buyToken = async function (input,stoken, cb) {
@@ -101,8 +124,23 @@ export let buyToken = async function (input,stoken, cb) {
     let account=scatter.identity.accounts[0].name;
     let contract = await eos.contract("eosiotoken12")
     console.log(contract)
-    let result = await contract.buytoken(input, stoken, account, { authorization: account})
-    alert("Buy-Token is successfully completed..")
+    let result = await contract.buytoken(input, stoken, account, 
+        { authorization: account}).then(result => {
+            alert("Buy-Token is successfully completed..")
+
+        }).catch(error => {
+            console.log("error---", error)
+            if(error.type==undefined)
+            {
+                const parsedResponse = JSON.parse(error);
+           alert(parsedResponse.error.details[0].message);
+            }
+            else
+            {
+                console.log(error.message);
+            }
+        });
+    
 }
 export let getBal = async function (stoken, cb) {
 
@@ -144,8 +182,23 @@ export let sellToken = async function (input, cb) {
     let account=scatter.identity.accounts[0].name;
     let contract = await eos.contract("eosiotoken12")
     console.log(contract)
-    let result = await contract.selltoken(input, account, { authorization: account})
-    alert("Sell-Token is successfully completed..")
+    let result = await contract.selltoken(input, account, 
+        { authorization: account}).then(result => {
+            alert("Sell-Token is successfully completed..")
+
+        }).catch(error => {
+            console.log("error---", error)
+            if(error.type==undefined)
+            {
+                const parsedResponse = JSON.parse(error);
+           alert(parsedResponse.error.details[0].message);
+            }
+            else
+            {
+                console.log(error.message);
+            }
+        });
+   
 }
 
 export let convertToken = async function (input,symbol,symbol2, cb) {
@@ -159,11 +212,25 @@ export let convertToken = async function (input,symbol,symbol2, cb) {
     let contract = await eos.contract("eosiotoken12")
     console.log(contract)
     console.log("---",input,symbol,symbol2,account)
-    let result = await contract.convert(input,symbol,symbol2,account, { authorization: account})
-    alert("Token convertion is successfully completed..")
-}
+    let result = await contract.convert(input,symbol,symbol2,account, 
+        { authorization: account}).then(result => {
+            alert("Token convertion is successfully completed..")
 
-export let convertToRelay = async function (input,symbol, cb) {
+        }).catch(error => {
+            console.log("error---", error)
+            if(error.type==undefined)
+            {
+                const parsedResponse = JSON.parse(error);
+           alert(parsedResponse.error.details[0].message);
+            }
+            else
+            {
+                console.log(error.message);
+            }
+        });
+    
+}
+ export let convertToRelay = async function (input,symbol, cb) {
 
     console.log("hello")
     let scatter = window.scatter;
@@ -174,9 +241,24 @@ export let convertToRelay = async function (input,symbol, cb) {
     let contract = await eos.contract("eosiotoken12")
     console.log(contract)
     console.log("---",input,symbol,account)
-    let result = await contract.torelay(input,symbol,account, { authorization: account})
-    alert("Convertion to relay token is successfully completed..")
-}
+    let result = await contract.torelay(input,symbol,account, 
+        { authorization: account}).then(result => {
+            alert("Convertion to relay token is successfully completed..")
+
+        }).catch(error => {
+            console.log("error---", error)
+            if(error.type==undefined)
+            {
+                const parsedResponse = JSON.parse(error);
+           alert(parsedResponse.error.details[0].message);
+            }
+            else
+            {
+                console.log(error.message);
+            }
+        });
+   
+}  
 
 export let convertFromRelay = async function (input,symbol, cb) {
 
@@ -189,41 +271,134 @@ export let convertFromRelay = async function (input,symbol, cb) {
     let contract = await eos.contract("eosiotoken12")
     console.log(contract)
     console.log("---",input,symbol,account)
-    let result = await contract.convertfrom(input,symbol,account, { authorization: account})
-    alert("Convertion from relay token is successfully completed..")
+    let result = await contract.convertfrom(input,symbol,account, 
+        { authorization: account}).then(result => {
+            alert("Convertion from relay token is successfully completed..")
+
+        }).catch(error => {
+            console.log("error---", error)
+            if(error.type==undefined)
+            {
+                const parsedResponse = JSON.parse(error);
+           alert(parsedResponse.error.details[0].message);
+            }
+            else
+            {
+                console.log(error.message);
+            }
+        });
 }
-/* export function createRelay(account_nameissuer,
-    total_supply,
-    max_supply,
-    connector1,
-    account_name_accaddress1,
-    connector2,
-    account_name_accaddress2) {
 
-} */
-/* export function createSmart(account_name_issuer,
-    total_supply,
-    max_supply,
-    connector1,
-    account_name_accaddress1,
-    weight) {
+//////////
 
-} */
+export let convertTwoRelay = async function (inputA,inputB,symbol, cb) {
+
+    console.log("hello")
+    let scatter = window.scatter;
+    var pubkey = "EOS8ZjT6ahwoz39srfqR53rNYTb5KXm1CysmZYyvHHkUa2xAgmqVL";
+    console.log("convert-to called");
+    const eos = scatter.eos(network, Eos, eosOptions);
+    let account=scatter.identity.accounts[0].name;
+    let contract = await eos.contract("eosiotoken12")
+    console.log(contract)
+    //console.log("---",input,symbol,account)
+    if(inputA!=undefined)
+    {
+        let result = await contract.torelay(inputA,symbol,account, 
+            { authorization: account}).then(result => {
+               // alert("Convertion to relay token is successfully completed..")
+    
+            }).catch(error => {
+                console.log("error---", error)
+                if(error.type==undefined)
+                {
+                    const parsedResponse = JSON.parse(error);
+               alert(parsedResponse.error.details[0].message);
+                }
+                else
+                {
+                    console.log(error.message);
+                }
+            });
+    }
+    if(inputB!=undefined)
+    {
+        let result = await contract.torelay(inputB,symbol,account, 
+            { authorization: account}).then(result => {
+               // alert("Convertion to relay token is successfully completed..")
+    
+            }).catch(error => {
+                console.log("error---", error)
+                if(error.type==undefined)
+                {
+                    const parsedResponse = JSON.parse(error);
+               alert(parsedResponse.error.details[0].message);
+                }
+                else
+                {
+                    console.log(error.message);
+                }
+            });
+    }
+    alert("Convertion to relay token is successfully completed..")   
+} 
+
+export let convertFromRelayTwo = async function (inputA,symbolA,inputB,symbolB, cb) {
+
+    console.log("hello")
+    let scatter = window.scatter;
+    var pubkey = "EOS8ZjT6ahwoz39srfqR53rNYTb5KXm1CysmZYyvHHkUa2xAgmqVL";
+    console.log("convert-from called");
+    const eos = scatter.eos(network, Eos, eosOptions);
+    let account=scatter.identity.accounts[0].name;
+    let contract = await eos.contract("eosiotoken12")
+    console.log(contract)
+    //console.log("---",input,symbol,account)
+    if(inputA!=undefined)
+    {
+        let result = await contract.convertfrom(inputA,symbolA,account, 
+            { authorization: account}).then(result => {
+               // alert("Convertion from relay token is successfully completed..")
+    
+            }).catch(error => {
+                console.log("error---", error)
+                if(error.type==undefined)
+                {
+                    const parsedResponse = JSON.parse(error);
+               alert(parsedResponse.error.details[0].message);
+                }
+                else
+                {
+                    console.log(error.message);
+                }
+            });
+    }
+    if(inputB!=undefined)
+    {
+        let result = await contract.convertfrom(inputB,symbolB,account, 
+            { authorization: account}).then(result => {
+               // alert("Convertion from relay token is successfully completed..")
+    
+            }).catch(error => {
+                console.log("error---", error)
+                if(error.type==undefined)
+                {
+                    const parsedResponse = JSON.parse(error);
+               alert(parsedResponse.error.details[0].message);
+                }
+                else
+                {
+                    console.log(error.message);
+                }
+            });
+    }
+
+    alert("Convertion from relay token is successfully completed..")
+    
+}
+
+/////////
+
 export function issue(account_name_to, quantity, memo) {
 
 }
-// export function transfer(account_name_from,
-//     account_name_to,
-//     quantity,
-//     memo) {
-
-// }
-/* export function buyToken(in_, stoken, account_name_issuer) {
-
-} */
-/* export function sellToken(in_, account_name_user) {
-
-} */
-/* export function convert(in_, string_symbol, string_symbol2, account_name_user) {
-
-} */

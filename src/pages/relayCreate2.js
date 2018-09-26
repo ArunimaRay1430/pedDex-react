@@ -42,7 +42,7 @@ export default class relayCreate2 extends Component {
                                 <p className="c5x mg0 pad f3 f16 c3">List a New Token on PEGDEX</p>
                                 <div className="pad">
                                      <h5 className="f2 mg0 c3 mgtb">Token</h5>
-                                    <input ref="first" onKeyPress={(e) => this.firstMethod(e)} type="text" placeholder="token-symbol (in UpperCase)" value = {this.state.tokenSymbol} className="f16 f3 c3" onChange={(e)=>this.setState({tokenSymbol:e.target.value.toUpperCase()})} />
+                                    <input ref="first" onKeyPress={(e) => this.firstMethod(e)} type="text" placeholder="token-symbol (in UpperCase), max length 7" value = {this.state.tokenSymbol} maxLength = "7" className="f16 f3 c3" onChange={(e)=>this.setState({tokenSymbol:e.target.value.toUpperCase()})} />
                                     <h5 className="f2 mg0 c3 mgtb">Number Of Token</h5>
                                     <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="number of token to be created (format : 0.0000)" className="f16 f3 c3" onChange={(e)=>this.setState({numberOfToken:parseFloat(e.target.value).toFixed(4)})} />
                                     <h5 className="f2 mg0 c3 mgtb mgf1">Connector1 Symbol</h5>

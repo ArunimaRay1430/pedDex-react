@@ -57,20 +57,19 @@ export default class componentName extends Component {
         //this.getTableData()
 
     }
-
     getTableData = () => {
-        // this.setState({ isLoading: true })
+        this.setState({ isLoading: true })
         axios.get(`http://apipegdex.zero2pi.com/getsmarttoken`).then(res => {
             const resp = res.data;
-            console.log(resp, "---hay")
-            this.setState({ data: resp, isLoading: false });
+            this.setState({ data: resp, isLoading: false })
             this.setAmount();
-
         }, (error) => {
             console.log(error.response);
             this.setState({ isLoading: false })
         })
     }
+
+  
     setAmount = () => {
 
         document.addEventListener('scatterLoaded', async (scatterExtension) => {
@@ -86,12 +85,6 @@ export default class componentName extends Component {
                 this.state.account = scatter.identity.accounts[0].name
 
                 let curr = []
-                // for (var i = 0; i < this.state.data.length; i++) {
-                //     let symbol = this.state.data[i].symbol;
-                //     eos.getCurrencyBalance('eosiotoken12', this.state.account, symbol).then(res => {
-                //         curr[i] = res[0];
-                //     })
-                // }
                 let data = await this.state.data.map((val, index) => {
                     let symbol = val.symbol;
                     eos.getCurrencyBalance('eosiotoken12', this.state.account, symbol).then(res => {
@@ -112,12 +105,10 @@ export default class componentName extends Component {
         })
     }
    
-    buySell = (data) => {
-
-    }
+    
 
     convertContinue = (path) => {
-        this.props.history.push('/Convert/', { symbol: path.symbol, price: path.priceEachToken, mrktcap: path.marketCap, liqui: path.liquidity })
+        this.props.history.push('/Convert/', { symbol: path.symbol, price: path.priceEachToken, mrktcap: path.marketCap, liqui: path.liquidity,add:path.connector1Address,weight:path.weight,connamount:path.connAmount })
 
     }
 
@@ -142,11 +133,7 @@ export default class componentName extends Component {
                                     </tr>
 
 
-                                    {this.state.data.map((value, k) => <tr key={k} className="_tokenN" onClick={(e) => this.convertContinue(value)}>
-
-
-
-
+                                      {this.state.data.map((value, k) => <tr key={k} className="_tokenN" >
                                         <td>
                                             <img src={require('../../images/img250/download.png')} />
                                         </td>
@@ -166,15 +153,11 @@ export default class componentName extends Component {
                                         </td>
                                         <td>{value.priceEachToken.toFixed(4)}</td>
                                         <td>${value.marketCap.toFixed(4)}</td>
-                                        <td>{value.liquidity}</td>
-
+                                        <td>${value.liquidity}</td>
                                         {<td >{(value.balance === undefined) ? 'NA' : value.balance}</td>}
-                                        {/* <td >{(this.state.currency[1] === undefined) ? 'NA' : this.state.currency[0]}</td> */}
-
                                         <td>
-                                            <button className="bySel" onClick={(e) => this.buySell(value.priceEachToken)}>Buy / Sell</button>
+                                            <button className="bySel" onClick={(e) => this.convertContinue(value)}>Buy / Sell</button>
                                         </td>
-
                                     </tr>)}
 
                                 </tbody>

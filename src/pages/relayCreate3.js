@@ -72,15 +72,20 @@ export default class relayCreate3 extends Component {
             }
           }
         ]
-      }, (err, result) => {
-        if (err) {
-          console.log(err)
-        } else {
-          console.log(result)
+      }).catch(error => {
+        this.setState({
+            ButtonState: false
+        })
+        console.log("error---", error)
+        if (error.type == undefined) {
+            const parsedResponse = JSON.parse(error);
+            alert(parsedResponse.error.details[0].message);
         }
-      }
-      //options -- example: {broadcast: false}
-    )
+        else {
+            console.log(error.message);
+        }
+    });
+
 }
 
     render(){
@@ -98,7 +103,7 @@ export default class relayCreate3 extends Component {
                                     <h5 className="f2 mg0 c3 mgtb">Deposit Connector1</h5>
                                     <h1>${this.props.location.state.connector1Deposit}</h1>
                                     <button onClick={()=>{
-                                        this.handleTransfer(this.setState({ButtonState : true }))}} className="c7 br2">Transfer</button>
+                                        this.handleTransfer()}} className="c7 br2">Transfer</button>
                                 </div>}
                                 <div className="full pad tr bn5x">
                                     {<button disabled={!this.state.ButtonState} className="c7 br2" onClick={()=>this.props.history.push({pathname:'/relayCreate/4',state:{token1Address:this.state.token1Address,token2Address:this.state.token2Address,tokenSymbol:this.state.tokenSymbol,numberOfToken:this.state.numberOfToken,connector1Symbol:this.state.connector1Symbol,connector1Deposit:this.state.connector1Deposit,connector2Symbol:this.state.connector2Symbol,pegDeposit:this.state.pegDeposit}})}>NEXT</button>}

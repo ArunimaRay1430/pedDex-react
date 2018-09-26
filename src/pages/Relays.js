@@ -105,13 +105,10 @@ export default class Relays extends Component {
         })
     }
 
-    buySell = (data) => {
-        
-    }
-
+    
     convertContinue = (path) => {
         console.log(path.priceEachToken);
-        this.props.history.push('/RelayConvert/',{symbol1:path.connector1Symbol,symbol2:path.connector2Symbol, price:path.priceEachConn,symbol:path.symbol,mrktcap:path.marketCap,liqui:path.liquidity, pricetoken:path.priceEachToken})
+        this.props.history.push('/RelayConvert/',{symbol1:path.connector1Symbol,symbol2:path.connector2Symbol, price:path.priceATDItoCET,symbol:path.symbol,mrktcap:path.marketCap,liqui:path.liquidity, pricetoken:path.priceEachToken,conn1add:path.connector1Address,conn2add:path.connector2Address,conn1amount:path.conn1Amount,conn2amount:path.conn2Amount})
           
       } 
 
@@ -132,7 +129,7 @@ export default class Relays extends Component {
                                         <td>My Balance</td>
                                         <td colSpan="2">My Balance</td>
                                 </tr>
-                                {this.state.data.map((value, k) => <tr key={k} className="_tokenN" onClick={(e) => this.convertContinue(value)}>
+                                {this.state.data.map((value, k) => <tr key={k} className="_tokenN" >
                                         <td>
                                             <img src={require('../images/img250/download.png')} />
                                         </td>
@@ -155,7 +152,7 @@ export default class Relays extends Component {
                                         <td>{value.liquidity}</td>
                                         {<td >{(value.balance === undefined) ? 'NA' : value.balance}</td>}
                                         <td>
-                                        <button className="bySel" onClick={(e) => this.buySell(value.priceEachRel)}>Buy / Sell</button>
+                                        <button className="bySel" onClick={(e) => this.convertContinue(value)}>Buy / Sell</button>
                                     </td>
                                 </tr>)}
                             </tbody>

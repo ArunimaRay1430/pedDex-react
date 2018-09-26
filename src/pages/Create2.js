@@ -40,7 +40,7 @@ export default class Create2 extends Component {
                                 <p className="c5x mg0 pad f3 f16 c3">List a New Token on PEGDEX</p>
                                 <div className="pad">
                                     <h5 className="f2 mg0 c3 mgtb">Token</h5>
-                                    <input  ref="token" type="text" onKeyPress={(e) => this.firstMethod(e)} placeholder="token-Symbol (in UpperCase)" value = {this.state.tokenSymbol} className="f16 f3 c3" onChange={(e)=>this.setState({tokenSymbol:e.target.value.toUpperCase()})}   />
+                                    <input  ref="token" type="text" onKeyPress={(e) => this.firstMethod(e)} placeholder="token-Symbol (in UpperCase),max length 7" value = {this.state.tokenSymbol} maxLength = "7" className="f16 f3 c3" onChange={(e)=>this.setState({tokenSymbol:e.target.value.toUpperCase()})}   />
                                     <h5 className="f2 mg0 c3 mgtb mgf1">Number Of Token</h5>
                                     <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="number of token to be created (format : 0.0000)"   className="f16 f3 c3" onChange={(e)=>this.setState({numberOfToken:parseFloat(e.target.value).toFixed(4)})} />
                                     <h5 className="f2 mg0 c3 mgtb">PegDex Symbol</h5>
