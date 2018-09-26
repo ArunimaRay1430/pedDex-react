@@ -289,7 +289,6 @@ export let convertFromRelay = async function (input,symbol, cb) {
         });
 }
 
-//////////
 
 export let convertTwoRelay = async function (inputA,inputB,symbol, cb) {
 
@@ -353,7 +352,7 @@ export let convertFromRelayTwo = async function (inputA,symbolA,inputB,symbolB, 
     let account=scatter.identity.accounts[0].name;
     let contract = await eos.contract("eosiotoken12")
     console.log(contract)
-    //console.log("---",input,symbol,account)
+    
     if(inputA!=undefined)
     {
         let result = await contract.convertfrom(inputA,symbolA,account, 
@@ -397,7 +396,6 @@ export let convertFromRelayTwo = async function (inputA,symbolA,inputB,symbolB, 
     
 }
 
-/////////
 
 export function issue(account_name_to, quantity, memo) {
 
