@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import '../utils/methods.js'
 import '../style/Create.css'
-import { buyToken, convertToken,convertFromRelayTwo } from '../utils/methods.js';
+import { buyToken, convertToken, convertFromRelayTwo } from '../utils/methods.js';
 import { sellToken, convertToRelay, convertFromRelay, convertTwoRelay } from '../utils/methods.js';
 import axios from 'axios';
 import { Modal } from 'antd';
@@ -71,53 +71,68 @@ export default class RelayConvert extends Component {
         console.log("welcome");
     }
     handleTransfer = () => {
-
+        
         let scatter = window.scatter;
         console.log("selltoken called");
         const eos = scatter.eos(network, Eos, eosOptions);
         let account = scatter.identity.accounts[0].name;
         let accounttoken;
         let am;
+        let amt;
         if (this.state.conn1sym == "ATDI") {
             accounttoken = this.state.token1Address;
             am = this.state.conn1sym;
+            amt = this.state.conn1amount;
         } else {
             accounttoken = this.state.token2Address;
             am = this.state.conn1sym;
         }
-        eos.transaction(
-            {
-                actions: [
-                    {
-                        account: accounttoken,
-                        name: 'transfer',
-                        authorization: [{
-                            actor: account,
-                            permission: 'active'
-                        }],
-                        data: {
-                            from: account,
-                            to: "intermediate",
-                            quantity: `${this.state.token1} ${am}`,
-                            memo: "hello"
+
+        if (this.state.token1 < amt )
+        {
+            eos.transaction(
+                {
+                    actions: [
+                        {
+                            account: accounttoken,
+                            name: 'transfer',
+                            authorization: [{
+                                actor: account,
+                                permission: 'active'
+                            }],
+                            data: {
+                                from: account,
+                                to: "intermediate",
+                                quantity: `${parseFloat(this.state.token1).toFixed(4)} ${am}`,
+                                memo: "hello"
+                            }
+                        }
+                    ]
+                }, (err, result) => {
+                    if (err) {
+                        console.log(err)
+                        if (err.type == undefined) {
+                            const parsedResponse = JSON.parse(err);
+                            alert(parsedResponse.error.details[0].message);
+                        }
+                        alert("TRANSACTION NOT COMPLETED")
+                    } else {
+                        if (this.state.conn1sym == "ATDI") {
+                            var s = parseFloat(this.state.token1).toFixed(4) + " " + this.state.conn1sym;
+                            convertToken(s, this.state.sym, this.state.conn2sym, "")
+                        } else if (this.state.conn1sym == "CET") {
+                            var s = parseFloat(this.state.token1).toFixed(4) + " " + this.state.conn1sym;
+                            convertToken(s, this.state.sym, this.state.conn2sym, "")
                         }
                     }
-                ]
-            }, (err, result) => {
-                if (err) {
-                    console.log(err)
-                    alert("TRANSACTION NOT COMPLETED")
-                } else {
-                    if (this.state.conn1sym == "ATDI") {
-                        var s = this.state.token1 + " " + this.state.conn1sym;
-                        convertToken(s, this.state.sym, this.state.conn2sym, "")
-                    } else if (this.state.conn1sym == "CET") {
-                        var s = this.state.token1 + " " + this.state.conn1sym;
-                        convertToken(s, this.state.sym, this.state.conn2sym, "")
-                    }
                 }
-            }
-        )
+            )
+        }
+
+        else{
+            alert("Input connector amount exceeds availabality")
+        }
+            
     }
 
     bnttransfer() {
@@ -128,43 +143,55 @@ export default class RelayConvert extends Component {
         let account = scatter.identity.accounts[0].name;
         let accounttoken = this.state.token2Address;
         let am = this.state.BNT;
-
-        eos.transaction(
-            {
-                actions: [
-                    {
-                        account: accounttoken,
-                        name: 'transfer',
-                        authorization: [{
-                            actor: account,
-                            permission: 'active'
-                        }],
-                        data: {
-                            from: account,
-                            to: "intermediate",
-                            quantity: `${this.state.token111} ${am}`,
-                            memo: "hello"
+        if (this.state.token111 < this.state.conn2amount) {
+            eos.transaction(
+                {
+                    actions: [
+                        {
+                            account: accounttoken,
+                            name: 'transfer',
+                            authorization: [{
+                                actor: account,
+                                permission: 'active'
+                            }],
+                            data: {
+                                from: account,
+                                to: "intermediate",
+                                quantity: `${parseFloat(this.state.token111).toFixed(4)} ${am}`,
+                                memo: "hello"
+                            }
                         }
-                    }
-                ]
-            }, (err, result) => {
-                if (err) {
-                    console.log(err)
-                    alert("BNT TRANSACTION NOT COMPLETED")
-                } else {
-                    alert("BNT TRANSACTION  COMPLETED")
-                    if (this.state.token11 != "") {
-                        var s = this.state.token11 + " " + this.state.PEGUSD;
-                        var e = this.state.token111 + " " + this.state.BNT;
-                        convertTwoRelay(s, e, this.state.sym)
+                    ]
+                }, (err, result) => {
+                    if (err) {
+                        console.log(err)
+                        if (err.type == undefined) {
+                            const parsedResponse = JSON.parse(err);
+                            alert(parsedResponse.error.details[0].message);
+                        }
+                        alert("BNT TRANSACTION NOT COMPLETED")
                     } else {
-                        var s = this.state.token111 + " " + this.state.BNT;
-                        convertToRelay(s, this.state.BNTUSD2, "")
-                    }
+                        alert("BNT TRANSACTION  COMPLETED")
+                        if (this.state.token11 != "") {
+                            var s = parseFloat(this.state.token11).toFixed(4) + " " + this.state.PEGUSD;
+                            var e = parseFloat(this.state.token111).toFixed(4) + " " + this.state.BNT;
+                            convertTwoRelay(s, e, this.state.sym)
+                        } else {
+                            var s = parseFloat(this.state.token111).toFixed(4) + " " + this.state.BNT;
+                            convertToRelay(s, this.state.BNTUSD2, "")
+                        }
 
+                    }
                 }
+            )
+        } else {
+            alert("Input connector2 amount exceeds availabality")
+            if (this.state.token11 != "") {
+                var s = parseFloat(this.state.token11).toFixed(4) + " " + this.state.PEGUSD;
+                convertToRelay(s, this.state.sym)
             }
-        )
+        }
+
     }
     atditransfer() {
         let scatter = window.scatter;
@@ -173,44 +200,55 @@ export default class RelayConvert extends Component {
         let account = scatter.identity.accounts[0].name;
         let accounttoken = this.state.token1Address;
         let am = this.state.PEGUSD;
-
-        eos.transaction(
-            {
-                actions: [
-                    {
-                        account: accounttoken,
-                        name: 'transfer',
-                        authorization: [{
-                            actor: account,
-                            permission: 'active'
-                        }],
-                        data: {
-                            from: account,
-                            to: "intermediate",
-                            quantity: `${this.state.token11} ${am}`,
-                            memo: "hello"
+        if (this.state.token11 < this.state.conn1amount) {
+            eos.transaction(
+                {
+                    actions: [
+                        {
+                            account: accounttoken,
+                            name: 'transfer',
+                            authorization: [{
+                                actor: account,
+                                permission: 'active'
+                            }],
+                            data: {
+                                from: account,
+                                to: "intermediate",
+                                quantity: `${parseFloat(this.state.token11).toFixed(4)} ${am}`,
+                                memo: "hello"
+                            }
                         }
-                    }
-                ]
-            }, (err, result) => {
-                if (err) {
-                    console.log(err)
-                    alert("ATDI TRANSACTION NOT COMPLETED")
-                } else {
-                    alert("ATDI TRANSACTION  COMPLETED")
-
-                    if (this.state.BNT == "CET" && this.state.token111 != "") {
-                        this.bnttransfer();
+                    ]
+                }, (err, result) => {
+                    if (err) {
+                        console.log(err)
+                        if (err.type == undefined) {
+                            const parsedResponse = JSON.parse(err);
+                            alert(parsedResponse.error.details[0].message);
+                        }
+                        alert("ATDI TRANSACTION NOT COMPLETED")
                     } else {
-                        var s = this.state.token11 + " " + this.state.PEGUSD;
-                        convertToRelay(s, this.state.sym, "")
+                        alert("ATDI TRANSACTION  COMPLETED")
+
+                        if (this.state.BNT == "CET" && this.state.token111 != "") {
+                            this.bnttransfer();
+                        } else {
+                            var s = parseFloat(this.state.token11).toFixed(4) + " " + this.state.PEGUSD;
+                            convertToRelay(s, this.state.sym, "")
+                        }
+
+
+
                     }
-
-
-
                 }
-            }
-        )
+            )
+        }
+        else {
+            alert("Input connector amount (PEGUSD) exceeds availabality")
+
+        }
+
+
     }
     handleTransfer2 = (e) => {
         if (this.state.PEGUSD == "ATDI") {
@@ -221,16 +259,16 @@ export default class RelayConvert extends Component {
             }
         } else {
             if (this.state.token11 !== "" && this.state.token111 != "") {
-                var s1 = this.state.token11 + " " + this.state.PEGUSD;
-                var s2 = this.state.token111 + " " + this.state.BNT;
-                convertFromRelayTwo(s1,this.state.BNTUSD1,s2,this.state.BNTUSD2,"")
+                var s1 = parseFloat(this.state.token11).toFixed(4) + " " + this.state.PEGUSD;
+                var s2 = parseFloat(this.state.token111).toFixed(4) + " " + this.state.BNT;
+                convertFromRelayTwo(s1, this.state.BNTUSD1, s2, this.state.BNTUSD2, "")
             } else {
                 if (this.state.PEGUSD == this.state.sym && this.state.token11 != "" && this.state.BNTUSD1 == "ATDI") {
-                    var s = this.state.token11 + " " + this.state.PEGUSD;
+                    var s = parseFloat(this.state.token11).toFixed(4) + " " + this.state.PEGUSD;
                     convertFromRelay(s, this.state.BNTUSD1, "");
                 } else if (this.state.BNT == this.state.sym && this.state.token111 != "" && this.state.BNTUSD2 == "CET") {
                     console.log("cet")
-                    var s = this.state.token111 + " " + this.state.BNT;
+                    var s = parseFloat(this.state.token111).toFixed(4) + " " + this.state.BNT;
                     convertFromRelay(s, this.state.BNTUSD2, "");
                 }
             }
@@ -393,7 +431,7 @@ export default class RelayConvert extends Component {
                                                 </tr>
                                                 <tr>
                                                     <td>Slippage:</td>
-                                                    <td className="tr">0.00%</td>
+                                                    <td className="tr">{(this.state.token2 / this.state.liqui).toFixed(4)}%</td>
 
                                                 </tr>
                                                 <Modal

@@ -13,8 +13,8 @@ import relayCreate3 from './pages/relayCreate3';
 import relayCreate4 from './pages/relayCreate4';
 import Convert from './pages/Convert';
 import RelayConvert from './pages/RelayConvert';
-import RelayTransfer from './pages/RelayTransfer';
-import Transfer from './pages/Transfer';
+
+
 
 
 
@@ -43,8 +43,6 @@ class App extends Component {
           <Route path="/relayCreate/4" component={relayCreate4} />
           <Route path="/Convert/" component={Convert}/>
           <Route path="/RelayConvert/" component={RelayConvert}/>
-          <Route path="/RelayTransfer/" component={RelayTransfer}/>
-          <Route path="/Transfer/" component={Transfer}/>
          </div> 
       </Router>
     );

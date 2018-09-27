@@ -34,67 +34,78 @@ export default class Convert extends Component {
     }
     handleTransfer = () => {
         if (this.state.connsym == "ATDI") {
-            var s = this.state.token1 + " " + this.state.connsym;
-            console.log(this.state.connsym)
-            const network = {
-                protocol: 'http', // Defaults to https
-                blockchain: "eos",
-                host: "193.93.219.219",
-                port: 8888,
-                chainId:
-                    "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca"
-            };
-
-            const eosOptions = {
-                chainId:
-                    "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca"
-            };
-            const requiredFields = {
-                accounts: [
-                    {
-                        blockchain: "eos",
-                        host: "193.93.219.219",
-                        port: 8888,
-                        chainId:
-                            "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca"
-                    }
-                ]
-            };
-            let scatter = window.scatter;
-            console.log("selltoken called");
-            const eos = scatter.eos(network, Eos, eosOptions);
-            let account = scatter.identity.accounts[0].name;
-            console.log(account);
-            eos.transaction(
-                {
-                    actions: [
+            if(this.state.token1<this.state.connamount)
+            {
+                var s = parseFloat(this.state.token1).toFixed(4) + " " + this.state.connsym;
+                console.log(s)
+                const network = {
+                    protocol: 'http', // Defaults to https
+                    blockchain: "eos",
+                    host: "193.93.219.219",
+                    port: 8888,
+                    chainId:
+                        "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca"
+                };
+    
+                const eosOptions = {
+                    chainId:
+                        "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca"
+                };
+                const requiredFields = {
+                    accounts: [
                         {
-                            account: this.state.tokenAddress,
-                            name: 'transfer',
-                            authorization: [{
-                                actor: account,
-                                permission: 'active'
-                            }],
-                            data: {
-                                from: account,
-                                to: "intermediate",
-                                quantity: `${this.state.token1} ${this.state.connsym}`,
-                                memo: "hello"
-                            }
+                            blockchain: "eos",
+                            host: "193.93.219.219",
+                            port: 8888,
+                            chainId:
+                                "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca"
                         }
                     ]
-                }, (err, result) => {
-                    if (err) {
-                        console.log(err)
-                        alert(" transaction not completed")
-                    } else {
-
-                        buyToken(s, this.state.tokensym, ""); 
+                };
+                let scatter = window.scatter;
+                console.log("selltoken called");
+                const eos = scatter.eos(network, Eos, eosOptions);
+                let account = scatter.identity.accounts[0].name;
+                console.log(account);
+                eos.transaction(
+                    {
+                        actions: [
+                            {
+                                account: this.state.tokenAddress,
+                                name: 'transfer',
+                                authorization: [{
+                                    actor: account,
+                                    permission: 'active'
+                                }],
+                                data: {
+                                    from: account,
+                                    to: "intermediate",
+                                    quantity: `${parseFloat(this.state.token1).toFixed(4)} ${this.state.connsym}`,
+                                    memo: "hello"
+                                }
+                            }
+                        ]
+                    }, (err, result) => {
+                        if (err) {
+                            console.log(err)
+                            
+                            if (err.type == undefined) {
+                                const parsedResponse = JSON.parse(err);
+                                alert(parsedResponse.error.details[0].message);
+                            }
+                            alert(" transaction not completed")
+                        } else {
+    
+                            buyToken(s, this.state.tokensym, ""); 
+                        }
                     }
-                }
-            )       
+                ) 
+            } else{
+                alert("Input connector amount exceeds availabality")
+            }
+                  
         } else {
-            var s = this.state.token1 + " " + this.state.connsym;
+            var s = parseFloat(this.state.token1).toFixed(4) + " " + this.state.connsym;
             sellToken(s, "");
 
         }
