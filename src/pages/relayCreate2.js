@@ -51,7 +51,7 @@ export default class relayCreate2 extends Component {
                                     <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="connector1 amount (format : 0.0000)" className="f16 f3 c3" onChange={(e)=>this.setState({connector1Deposit:parseFloat(e.target.value).toFixed(4)})} />
                                     <h5 className="f2 mg0 c3 mgtb mgf1">Connector2 Smbol </h5>
                                     <input type="text" onKeyPress={(e) => this.firstMethod(e)} placeholder="connector2 symbol (in UpperCase)" value = {this.state.connector2Symbol} className="f16 f3 c3" onChange={(e)=>this.setState({connector2Symbol:e.target.value.toUpperCase()})} />
-                                    <h5 className="f2 mg0 c3 mgtb mgf1">PEG:USD Deposit Amount</h5>
+                                    <h5 className="f2 mg0 c3 mgtb mgf1">Connector2 Deposit Amount</h5>
                                     <input type="text" onKeyPress={(e) => this.secondMethod(e)} placeholder="Initial PEG:USD Funding Deposit (format : 0.0000)" className="f16 f3 c3" onChange={(e)=>this.setState({pegDeposit:parseFloat(e.target.value).toFixed(4)})} />                    
 
                                 </div>
